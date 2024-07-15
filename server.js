@@ -3,6 +3,7 @@ const express = require('express');
 const { db } = require('./utils/constant');
 const middlewares = require('./middlewares/mid');
 const path = require('path');
+require('dotenv').config({ path: "./.env" });
 
 (async function() {
     try {
