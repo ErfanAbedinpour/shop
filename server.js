@@ -1,40 +1,43 @@
 require('dotenv').config();
 const express = require('express');
 const { db } = require('./utils/constant');
-const middlewares = require('./config/midConfig');
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const flash = require('connect-flash');
 const path = require('path');
 require('dotenv').config({ path: "./.env" });
-
-(async function() {
-    try {
-        await db.authenticate();
-        console.log('DB is connected');
-        await db.sync({ logging: false })
-        console.log('sync succefully');
-    } catch (err) {
-        console.error(err)
-    }
-})();
-
 const app = express()
 
-app.use(middlewares)
+
+app.use(
+    session({
+        secret: process.env.SECRET,
+        store: new SequelizeStore({
+            db: db,
+        }),
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }));
+app.use(flash());
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 app.use((req, res, next) => {
-    const isAuth = req.session.user ? true : false;
     app.locals = {
         path: req.path,
-        current_user: req.session.user,
-        isAuth: isAuth,
     }
     next()
 })
 
-const authRouter = require('./router/auth.r')
-app.use('/auth', authRouter)
+const authRouter = require('./router/auth.r');
+app.use('/auth', authRouter);
 
 
 app.use((err, req, res, next) => {
@@ -53,5 +56,4 @@ app.use((err, req, res, next) => {
 })
 
 
-
-app.listen(8000, () => { console.log('server run on 8000 port') })
+module.exports = app

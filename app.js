@@ -1,4 +1,5 @@
 const app = require('./server');
+const { db } = require('./utils/constant');
 (async function() {
   try {
     await db.authenticate();

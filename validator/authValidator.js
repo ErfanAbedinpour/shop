@@ -4,10 +4,10 @@ const userModel = require('../models/User')
 exports.singUpValidator = [
   body('username')
     .notEmpty()
-    .withMessage('usrname is required')
+    .withMessage('نام کاربری اجباری است')
     .bail()
     .isLength({ min: "4" })
-    .withMessage('username must be letter than 4 charackter')
+    .withMessage('نام کاربری باید حداقل ۴ کاراکتر داشته باشد')
     .bail(),
   body('role')
     .optional()
@@ -19,27 +19,33 @@ exports.singUpValidator = [
         throw new Error('role not valid');
       }
       return true
-    }),
+    })
+    .bail(),
   body('email')
     .notEmpty()
-    .withMessage('email required')
+    .withMessage('ایمیل اجباری است')
     .bail()
     .isEmail()
-    .withMessage('please enter valid email')
+    .withMessage('لطفا ایمیل معتبر وارد کنید')
     .bail()
-    .custom(email => {
-      return userModel.findOne({ where: { email } }).then(user => {
-        if (user) throw new Error("some one with this username is registered")
-        return true
-      })
+    .custom(async (email) => {
+      const user = await userModel.findOne({ where: { email } })
+      if (user) throw new Error("این ایمیل توسط شخص دیگر استفاده میشود")
+      return true
     })
     .bail(),
   body('password')
     .notEmpty()
-    .withMessage('password is required')
+    .withMessage('پسورد اجباری است')
     .bail()
     .isLength({ min: "6" })
-    .withMessage('password must be letter that 6 char')
+    .withMessage('پسورد باید حداقل ۶ کاراکتر داشته باشد')
     .bail()
+    .custom((pass, { req }) => {
+      if (req.body.confirmPassword !== pass) {
+        throw new Error('پسورد ها همخونی ندارند')
+      }
+      return true
+    })
   ,
 ]
