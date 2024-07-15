@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { db } = require('./utils/constant');
-const middlewares = require('./middlewares/mid');
+const middlewares = require('./config/midConfig');
 const path = require('path');
 require('dotenv').config({ path: "./.env" });
 
@@ -12,14 +12,14 @@ require('dotenv').config({ path: "./.env" });
         await db.sync({ logging: false })
         console.log('sync succefully');
     } catch (err) {
-        throw new Error(err.message)
+        console.error(err)
     }
 })();
 
 const app = express()
 
-app.set('view engine', 'ejs')
 app.use(middlewares)
+app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 
@@ -33,9 +33,12 @@ app.use((req, res, next) => {
     next()
 })
 
+const authRouter = require('./router/auth.r')
+app.use('/auth', authRouter)
 
 
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
+    if (err) return next(err);
     const error = new Error("متأسفیم، ما نتوانستیم صفحه ای را که در آن جستجو می کردید پیدا کنیم. پیشنهاد می کنیم به صفحه اصلی بازگردید.");
     error.status = 403;
     next(error)
