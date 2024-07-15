@@ -1,6 +1,6 @@
-const {Sequelize} = require('sequelize');
+const { Sequelize } = require('sequelize');
 
-exports.db = new Sequelize('mysql','root','12341234',{
-    dialect:"mysql",
-    database:"shop"
+exports.db = new Sequelize('mysql', process.env.DBHOST, process.env.DBPASS, {
+    dialect: "mysql",
+    database: process.env.DBNAME
 })
