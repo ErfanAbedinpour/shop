@@ -27,6 +27,8 @@ const user = db.define('User', {
         type: DataTypes.STRING,
         allowNull: false,
     }
+}, {
+    updatedAt: false
 });
 
 

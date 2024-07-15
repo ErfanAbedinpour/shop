@@ -1,6 +1,10 @@
 const { Sequelize } = require('sequelize');
 
-exports.db = new Sequelize('mysql', process.env.DBHOST, process.env.DBPASS, {
+const username = process.env.DBUSERNAME;
+const pass = process.env.DBPASS
+const host = process.env.DBHOST
+const name = process.env.DBNANE
+exports.db = new Sequelize(name, username, pass, {
     dialect: "mysql",
-    database: process.env.DBNAME
+    host: host
 })
