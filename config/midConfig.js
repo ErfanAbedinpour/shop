@@ -6,12 +6,20 @@ const { db: sequlize } = require('../utils/constant')
 const path = require('path');
 const router = express.Router()
 
+function extendDefaultFields(defaults, session) {
+    return {
+        data: defaults.data,
+        expires: defaults.expires,
+        userId: session.userId,
+    };
+}
 //session config
 router.use(session({
     secret: process.env.SECRET,
     store: new SequelizeStore({
         db: sequlize,
-        tableName: "sessions",
+        tableName: "Session",
+        extendDefaultFields
     }),
     resave: false,
     saveUninitialized: true,
