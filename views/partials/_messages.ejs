@@ -1,0 +1,17 @@
+<% if (msgObj) { %>
+    <% for (message of msgObj ) {%>
+        <% if (message.color === 'red') {%>
+            <div style="color:red">
+        <% } else if (message.color === 'green') {%>
+            <div style="color:green">
+        <% } else if (message.color === 'yellow') {%>
+            <div style="color:yello">
+        <% } else if (message.color === 'blue') {%>
+            <div style="color:blue">
+        <% } else if (message.color === 'stone') {%>
+            <div style="color:stone">
+        <% } %>
+            <p><span>- </span><%= message.msg %></p>
+        </div>
+    <% } %>
+<% } %>
