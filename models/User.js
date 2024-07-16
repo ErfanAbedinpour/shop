@@ -33,12 +33,11 @@ const user = db.define('User', {
 
 
 //hash pass before create 
-user.beforeCreate((user, option) => {
-    bcrypt.genSalt(12, (salt) => {
-        bcrypt.hash(user.password, salt, (hashPass) => {
-            user.password = hashPass
-        })
-    })
+user.beforeCreate(async (user, option) => {
+    console.log('hookam')
+    const salt = await bcrypt.genSalt(12);
+    const hashPass = await bcrypt.hash(user.password, salt);
+    user.password = hashPass
 })
 module.exports = user;
 

@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use((req, res, next) => {
+    console.log(req.session.isAuth)
     app.locals = {
         path: req.path,
     }
@@ -48,10 +49,9 @@ app.use((err, req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    res.status(err.status)
+    res.status(err.status ?? 500)
         .render('error', {
             msg: err.message,
-            statusCode: err.status
         })
 })
 

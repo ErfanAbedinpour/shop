@@ -11,4 +11,7 @@ router.route('/register')
   .get(auth.getRegister)
   .post(validator.singUpValidator, auth.postRegister)
 
+router.route('/login')
+  .get(auth.getLogin)
+  .post(validator.loginValidator, auth.loginPost)
 module.exports = router
