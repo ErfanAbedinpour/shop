@@ -64,9 +64,10 @@ exports.loginValidator = [
     .withMessage('لطفا ایمیل معتبر وارد کنید')
     .bail()
     .custom(async (email, { req }) => {
-      const user = await User.findOne({ where: { email } })
+      let user = await User.findOne({ where: { email } })
       if (!user || !await bcrypt.compare(req.body.password, user.password)) throw new Error("email or password incorrect")
-      req.user = user.id;
+      delete user.password;
+      req.user = user;
       return true
     })
 ]

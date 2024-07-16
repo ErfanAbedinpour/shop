@@ -1,6 +1,6 @@
 const isNotAuth = (req, res, next) => {
   try {
-    if (req.session.user) {
+    if (req.session.isAuth) {
       return res.redirect('/');
     }
     next()
@@ -11,7 +11,7 @@ const isNotAuth = (req, res, next) => {
 }
 
 const isAuth = (req, res, next) => {
-  if (!req.session.user) {
+  if (!req.session.isAuth) {
     return res.redirect('/auth/login');
   }
   next()

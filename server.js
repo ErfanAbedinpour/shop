@@ -14,6 +14,7 @@ app.use(
         secret: process.env.SECRET,
         store: new SequelizeStore({
             db: db,
+            expiration: Math.round(Date.now() + (7 * 24 * 60 * 60 * 1000))
         }),
         resave: false,
         saveUninitialized: false
@@ -28,21 +29,22 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 app.use((req, res, next) => {
-    console.log(req.session.isAuth)
     app.locals = {
         path: req.path,
+        currentUser: req.session.user,
+        isAuth: req.session.isAuth
     }
     next()
 })
 
+const homeRouter = require('./router/home.r')
+app.use(homeRouter);
 const authRouter = require('./router/auth.r');
 app.use('/auth', authRouter);
 
 
-app.use((err, req, res, next) => {
-    if (err) return next(err);
+app.use((req, res, next) => {
     const error = new Error("متأسفیم، ما نتوانستیم صفحه ای را که در آن جستجو می کردید پیدا کنیم. پیشنهاد می کنیم به صفحه اصلی بازگردید.");
     error.status = 403;
     next(error)

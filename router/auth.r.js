@@ -8,10 +8,10 @@ const router = Router()
 
 
 router.route('/register')
-  .get(auth.getRegister)
-  .post(validator.singUpValidator, auth.postRegister)
+  .get(middlewares.isNotAuth, auth.getRegister)
+  .post(middlewares.isNotAuth, validator.singUpValidator, auth.postRegister)
 
 router.route('/login')
-  .get(auth.getLogin)
-  .post(validator.loginValidator, auth.loginPost)
+  .get(middlewares.isNotAuth, auth.getLogin)
+  .post(middlewares.isNotAuth, validator.loginValidator, auth.loginPost)
 module.exports = router
