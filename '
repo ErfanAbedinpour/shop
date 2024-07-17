@@ -1,0 +1,34 @@
+const { DataTypes } = require('sequelize');
+const Cart = require('./Cart');
+const Category = require('./Category');
+const Comment = require('./Comment');
+const Factor = require('./Factor');
+const Order = require('./Order');
+const Product = require('./Product');
+const Ticket = require('./Ticket');
+const Type = require('./Type');
+const User = require('./User');
+const ProductCart = require('./ProductCart')
+
+
+
+//1:1
+User.belongsTo(Cart);
+Cart.hasOne(User);
+//1:m
+User.hasMany(Comment)
+Comment.belongsTo(User)
+
+
+
+module.exports = {
+  User,
+  Product,
+  Category,
+  Ticket,
+  Comment,
+  ProductCart,
+  Factor,
+  ProductCart,
+  Type,
+}

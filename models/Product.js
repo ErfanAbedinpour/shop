@@ -17,7 +17,7 @@ const Product = db.define('Product', {
     allowNull: false,
   },
   sizes: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   sizeType: {
@@ -26,19 +26,19 @@ const Product = db.define('Product', {
     allowNull: false
   },
   star: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     defaultValue: 2
   },
   images: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.TEXT,
     allowNull: false
   },
   quantity: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   price: {
-    type: DataTypes.FLOAT,
+    type: DataTypes.DECIMAL,
     allowNull: false
   }
 })

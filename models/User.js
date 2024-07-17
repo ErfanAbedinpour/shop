@@ -26,6 +26,18 @@ const user = db.define('User', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    phone: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    address: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    postalCode: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     updatedAt: false
@@ -34,7 +46,6 @@ const user = db.define('User', {
 
 //hash pass before create 
 user.beforeCreate(async (user, option) => {
-    console.log('hookam')
     const salt = await bcrypt.genSalt(12);
     const hashPass = await bcrypt.hash(user.password, salt);
     user.password = hashPass

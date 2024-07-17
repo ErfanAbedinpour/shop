@@ -4,7 +4,7 @@ const { db } = require('./utils/constant');
   try {
     await db.authenticate();
     console.log('DB is connected');
-    await db.sync({ logging: false })
+    await db.sync({ logging: false, force: true })
     console.log('sync succefully');
     app.listen(8000, () => { console.log('server is running on http://localhost:8000') })
   } catch (err) {

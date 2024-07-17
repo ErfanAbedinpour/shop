@@ -1,14 +1,55 @@
-const User = require('./User')
-const Category = require('./Category')
-const Product = require('./Product')
+const Cart = require('./Cart');
+const Category = require('./Category');
+const Comment = require('./Comment');
+const Factor = require('./Factor');
+const Order = require('./Order');
+const Product = require('./Product');
+const Ticket = require('./Ticket');
+const Type = require('./Type');
+const User = require('./User');
+const ProductCart = require('./ProductCart')
 
-Product.hasOne(User);
-Product.hasOne(Category);
+//1:1
+Cart.belongsTo(User)
+User.hasOne(Cart)
+//1:m
+User.hasMany(Comment);
+Comment.belongsTo(User);
 
-Category.hasOne(User);
+User.hasMany(Factor)
+Factor.belongsTo(User)
 
+User.hasMany(Order)
+Order.belongsTo(User)
+
+User.hasMany(Comment)
+Comment.belongsTo(User)
+
+User.hasMany(Ticket)
+Ticket.belongsTo(User)
+
+
+Type.hasMany(Category);
+Category.belongsTo(Type);
+
+Product.belongsTo(User)
+User.hasMany(Product)
+
+// m:m
+
+Product.belongsToMany(Cart, { through: ProductCart })
+Cart.belongsToMany(Product, { through: ProductCart })
+
+Order.belongsToMany(Product, { through: "OrderProduct" });
+Product.belongsToMany(Order, { through: "OrderProduct" });
 module.exports = {
   User,
   Product,
-  Category
+  Category,
+  Ticket,
+  Comment,
+  ProductCart,
+  Factor,
+  ProductCart,
+  Type,
 }
