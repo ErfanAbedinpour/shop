@@ -14,3 +14,4 @@ const Type = db.define('Types', {
   }
 })
 module.exports = Type
+module.exports = Mode 
