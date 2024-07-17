@@ -4,4 +4,5 @@
 
 
 -[x] register and singin user and render template
--[ ]  
+-[ ] create product model and CRUD login to them  
+-[ ] access to admin to create user and product
