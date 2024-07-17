@@ -1,3 +1,4 @@
+const { DataType, DataTypes } = require('sequelize');
 const Cart = require('./Cart');
 const Category = require('./Category');
 const Comment = require('./Comment');
@@ -18,6 +19,7 @@ Comment.belongsTo(User);
 
 User.hasMany(Factor)
 Factor.belongsTo(User)
+
 
 User.hasMany(Order)
 Order.belongsTo(User)
