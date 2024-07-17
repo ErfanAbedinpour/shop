@@ -14,7 +14,7 @@ function messageRawList(array) {
   if (array.length === 0) return null;
   const msgList = []
   for (const msgObj of array) {
-    msgList.push(msgObj.msg, msgObj.color)
+    msgList.push({ msg: msgObj.msg, color: msgObj.color })
   }
   return msgList
 }

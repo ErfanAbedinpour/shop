@@ -4,6 +4,7 @@ const { db } = require('./utils/constant');
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const flash = require('connect-flash');
+const logger = require('morgan')
 const path = require('path');
 require('dotenv').config({ path: "./.env" });
 const app = express()
@@ -27,6 +28,7 @@ app.use(flash());
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'))
 
 
 app.use((req, res, next) => {

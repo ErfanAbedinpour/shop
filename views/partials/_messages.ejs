@@ -11,7 +11,7 @@
         <% } else if (message.color === 'stone') {%>
             <div style="color:stone">
         <% } %>
-            <p style="color:red;"><span>-</span><%= message.msg %></p>
+            <p style="color:<%=message.color%>;"><span>- </span><%= message.msg %></p>
         </div>
     <% } %>
 <% } %>

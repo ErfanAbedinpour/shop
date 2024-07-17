@@ -34,8 +34,14 @@ exports.postRegister = async function(req, res, next) {
         msg: "error create user"
       }])
       res.status(201)
-      return res.redirect('back')
+      return res.redirect('back');
     }
+    req.flash('success', [
+      {
+        color: 'green',
+        msg: "user created succesfully"
+      }
+    ])
     return res.redirect('/auth/login')
   } catch (error) {
     console.error(error)
@@ -65,12 +71,12 @@ exports.loginPost = async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       req.flash('errors', result.array());
-      req.status(400);
+      res.status(400);
       return res.redirect(req.originalUrl);
     }
     res.status(200);
-    req.session.userId = req.user.id
-    req.session.user = { username: req.user.username, role: req.session.role, email: req.user.email }
+    req.session.userId = req.user.id;
+    req.session.user = { username: req.user.username, role: req.session.role, email: req.user.email };
     req.session.isAuth = true;
     res.redirect('/');
     return
