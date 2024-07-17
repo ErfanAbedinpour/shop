@@ -1,6 +1,14 @@
-const userModel = require('./User')
+const User = require('./User')
+const Category = require('./Category')
+const Product = require('./Product')
 
+Product.hasOne(User);
+Product.hasOne(Category);
+
+Category.hasOne(User);
 
 module.exports = {
-  User: userModel,
+  User,
+  Product,
+  Category
 }
