@@ -1,22 +1,17 @@
 const { db } = require('../utils/constant');
 const { DataTypes } = require('sequelize');
 
-const Category = db.define('Category', {
+const Mode = db.define('Category', {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
     allowNull: false,
     autoIncrement: true
   },
-  name: {
-    unique: true,
-    type: DataTypes.STRING,
+  type: {
+    type: DataTypes.ENUM,
+    values: ['man', 'woman'],
     allowNull: false
-  },
-  slug: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
+  }
 })
-module.exports = Category
+module.exports = Mode 
