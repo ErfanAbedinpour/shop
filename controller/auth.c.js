@@ -1,7 +1,7 @@
 const { User } = require('../models/tables');
 const { validationResult } = require('express-validator')
 const { errorMessage, messageRawList } = require('../helper/messageCls')
-//register user
+//register page render
 exports.getRegister = (req, res, next) => {
   const contex = {
     msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
@@ -11,6 +11,7 @@ exports.getRegister = (req, res, next) => {
   res.render('register', contex)
 }
 
+//post register
 exports.postRegister = async function(req, res, next) {
   try {
     const result = validationResult(req);
@@ -21,7 +22,7 @@ exports.postRegister = async function(req, res, next) {
       return
     }
     const { username, password, email } = req.body;
-    const role = await User.count() > 1 ? "admin" : "user";
+    const role = await User.count() < 1 ? "admin" : "user";
     const isFinish = await User.create({
       username,
       password,
@@ -50,7 +51,7 @@ exports.postRegister = async function(req, res, next) {
   }
 }
 
-//login user
+//login page render
 exports.getLogin = (req, res, next) => {
   try {
     const contex = {
@@ -65,7 +66,7 @@ exports.getLogin = (req, res, next) => {
     next(error)
   }
 }
-
+//login postl
 exports.loginPost = async (req, res, next) => {
   try {
     const result = validationResult(req);
@@ -86,7 +87,7 @@ exports.loginPost = async (req, res, next) => {
     next(error)
   }
 }
-
+//logout user
 exports.logOutPost = function(req, res, next) {
   try {
     req.session.destroy(err => {

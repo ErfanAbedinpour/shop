@@ -2,21 +2,23 @@ require('dotenv').config();
 const express = require('express');
 const { db } = require('./utils/constant');
 const session = require("express-session");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const RedisStore = require("connect-redis").default
+const { redis } = require('./utils/constant');
 const flash = require('connect-flash');
 const logger = require('morgan')
 const path = require('path');
 require('dotenv').config({ path: "./.env" });
 const app = express()
 
+const store = new RedisStore({
+    client: redis,
+    prefix: "session:"
+})
 
 app.use(
     session({
+        store: store,
         secret: process.env.SECRET,
-        store: new SequelizeStore({
-            db: db,
-            expiration: Math.round(Date.now() + (7 * 24 * 60 * 60 * 1000))
-        }),
         resave: false,
         saveUninitialized: false
     })
