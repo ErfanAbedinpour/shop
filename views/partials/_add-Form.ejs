@@ -4,7 +4,7 @@
                                 <%- include("./_messages.ejs",msgObj)%>
                                     <h3 class="title">مشخصات کالا جدید خود را وارد کنید</h3>
                                     <span class="or-text">یا</span>
-                                    <form action="/product/add" class="login-form" method="post">
+                                    <form action="/product/add" class="login-form" method="post" enctype="multipart/form-data" >
                                                 <div class="form-item">
                                                     <h4 class="form-header">* نام کالا</h4>
                                                     <input type="text" id="name" name="title" class="form-control"
@@ -22,12 +22,12 @@
                                                 </div>
                                                 <div class="form-item">
                                                     <h4 class="form-header">عکس کالا در تایتل را وارد کنید</h4>
-                                                    <input type="images" id="title-image" name="titleImage"
+                                                    <input type="file" id="title-image" name="titleImage"
                                                         class="form-control" required >
                                                 </div>
                                                 <div class="form-item" id="imageDiv">
                                                     <h4 class="form-header">عکس کالا در را وارد کنید</h4>
-                                                    <input type="images" id="image" name="images"
+                                                    <input type="file" id="image" name="images"
                                                         class="form-control">
                                                 </div>
                                                 <div class="submit-btn">
@@ -37,19 +37,20 @@
                             </div>
                         </div>
                         <script>
-                          const imageDiv = document.querySelector('#imageDiv')
+                          const imageDiv = document.querySelector('#imageDiv');
                                   let img = document.querySelector('#image')
                                   function inputNew(el) {
-                                    el.addEventListener('change', () => {
-                                      imageDiv.insertAdjacentHTML('beforeend', `
-                                        <hr>
-                                          <h4 class="form-header">عکس کالا در را وارد کنید</h4>
-                                          <input type="images" id="image" name="titleImage" class="form-control">
-                                          `)
-                                      el = Array.from(document.querySelectorAll(`#image`)).at(-1);
-                                      inputNew(el)
-                                    })
-                                  }                       
+                                      el.addEventListener('change', () => {
+                                        imageDiv.insertAdjacentHTML('beforeend', `
+                                          <hr>
+                                            <h4 class="form-header">عکس بعدی کالا در را وارد کنید</h4>
+                                            <input type="file" id="image" name="titleImage" class="form-control">
+                                            `)
+                                        el = Array.from(document.querySelectorAll(`#image`)).at(-1);
+                                        inputNew(el)
+                                      })
+                                   }                       
+                                   inputNew(img);
                         </script>
                     </section>
 

@@ -7,7 +7,6 @@ const { redis } = require('./utils/constant');
 const flash = require('connect-flash');
 const logger = require('morgan')
 const path = require('path');
-const middleware = require('./middlewares/mid')
 require('dotenv').config({ path: "./.env" });
 const app = express()
 

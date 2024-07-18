@@ -9,9 +9,13 @@
 - [x] design all entity and relation
 - [x] save session to redis
 - [] edit user profile
-- [x] better structure to static element in page
 - [] show all user to admin
 - [] reset password
 - [] cart CRUD
 - [] add product by admin
-- [] ban user from admin
+- [] product page create 
+- [] user show page page
+- [] admin page for show dashboard
+- [x] ban user from admin
+- [x] better template structure like auth form and fix index page bug
+- [x] create all models and relations 
