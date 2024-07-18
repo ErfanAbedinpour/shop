@@ -1,0 +1,55 @@
+                    <section class="login-area pt-100 pb-100">
+                        <div class="container">
+                            <div class="login-wrap text-center">
+                                <%- include("./_messages.ejs",msgObj)%>
+                                    <h3 class="title">مشخصات کالا جدید خود را وارد کنید</h3>
+                                    <span class="or-text">یا</span>
+                                    <form action="/product/add" class="login-form" method="post">
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* نام کالا</h4>
+                                                    <input type="text" id="name" name="title" class="form-control"
+                                                        placeholder="">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* توضیحات کالا</h4>
+                                                    <textarea type="text" name='description' class="form-control"
+                                                        placeholder="example@gmail.com">
+                                                      </textarea>
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* تعداد موجودی</h4>
+                                                    <input type="number" id="text-2" name="stockQuantity" class="form-control">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">عکس کالا در تایتل را وارد کنید</h4>
+                                                    <input type="images" id="title-image" name="titleImage"
+                                                        class="form-control" required >
+                                                </div>
+                                                <div class="form-item" id="imageDiv">
+                                                    <h4 class="form-header">عکس کالا در را وارد کنید</h4>
+                                                    <input type="images" id="image" name="images"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="submit-btn">
+                                                    <button class="rr-primary-btn">افزودن کالا</button>
+                                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                        <script>
+                          const imageDiv = document.querySelector('#imageDiv')
+                                  let img = document.querySelector('#image')
+                                  function inputNew(el) {
+                                    el.addEventListener('change', () => {
+                                      imageDiv.insertAdjacentHTML('beforeend', `
+                                        <hr>
+                                          <h4 class="form-header">عکس کالا در را وارد کنید</h4>
+                                          <input type="images" id="image" name="titleImage" class="form-control">
+                                          `)
+                                      el = Array.from(document.querySelectorAll(`#image`)).at(-1);
+                                      inputNew(el)
+                                    })
+                                  }                       
+                        </script>
+                    </section>
+

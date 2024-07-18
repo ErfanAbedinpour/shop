@@ -16,13 +16,13 @@ const Product = db.define('Product', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  StockQuantity: {
+  stockQuantity: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    defaultValue: 1
   },
-  star: {
-    type: DataTypes.INTEGER,
-    defaultValue: 2
+  titleImage: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   images: {
     type: DataTypes.TEXT,

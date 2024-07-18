@@ -1,7 +1,6 @@
 const { body } = require('express-validator')
 
-
-const createProductValidator = [
+exports.createProductValidator = [
   body('title')
     .notEmpty()
     .withMessage('تایتل فیلد اجباری است')
@@ -16,6 +15,19 @@ const createProductValidator = [
     .bail()
     .isLength({ min: 8 })
     .withMessage('توضیحات حداقل باید ۸ کارکتر باشد')
-
-
+  ,
+  body('stockQuantity')
+    .notEmpty()
+    .withMessage('لطفا موجودی کالا را وارد کنید')
+    .bail()
+  ,
+  body('price')
+    .notEmpty()
+    .withMessage('لطفا قیمت را وارد کنید')
+    .bail()
+    .customSanitizer(p => parseFloat(p))
+    .isFloat()
+    .withMessage('لطفا مبلغ معتبر وارد کنید')
+    .bail()
+  ,
 ]
