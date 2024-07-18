@@ -9,29 +9,28 @@ async function fetchData() {
       gender: "women"
     }
   ]);
-  await table.Category.bulkCreate([
+  const manCategory = await table.Category.bulkCreate([
     {
       name: "لباس مردانه",
       slug: "man-clothes",
-      TypeId: man.id
-    },
-    {
-      name: "لباس زنانه",
-      slug: "women-clothes",
-      TypeId: women.id
     },
     {
       name: "ساعت مردانه",
       slug: 'man-watch',
-      TypeId: man.id
     },
+  ])
+  const womenCategory = await table.Category.bulkCreate([
     {
       name: "ساعت زنانه",
       slug: "women-watch",
-      TypeId: women.id
-    }
+    },
+    {
+      name: "لباس زنانه",
+      slug: "women-clothes",
+    },
   ])
-
+  man.addCategories(manCategory)
+  women.addCategories(womenCategory)
   console.log('all data fetched succesfuuly')
 
 }

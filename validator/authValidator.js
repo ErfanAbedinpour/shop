@@ -65,7 +65,8 @@ exports.loginValidator = [
     .bail()
     .custom(async (email, { req }) => {
       let user = await User.findOne({ where: { email } })
-      if (!user || !await bcrypt.compare(req.body.password, user.password)) throw new Error("email or password incorrect")
+      if (!user || !await bcrypt.compare(req.body.password, user.password)) throw new Error("ایمیل یا پسورد اشباه است")
+      if (user.isBan && user.role !== 'admin') throw new Error('شما توسط ادمین بن شده اید لطفا با پشتیبانی پیام بدید')
       delete user.password;
       req.user = user;
       return true

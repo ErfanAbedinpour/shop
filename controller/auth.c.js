@@ -5,10 +5,11 @@ const { errorMessage, messageRawList } = require('../helper/messageCls')
 exports.getRegister = (req, res, next) => {
   const contex = {
     msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
-    title: "ثبت نام"
+    title: "ثبت نام",
+    preLoad: "ساخت حساب جدید"
   }
   res.status(200)
-  res.render('register', contex)
+    .render('register', contex)
 }
 
 //post register
@@ -17,9 +18,8 @@ exports.postRegister = async function(req, res, next) {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       req.flash('errors', result.array());
-      res.status(400)
-      res.redirect('/auth/register');
-      return
+      return res.status(400)
+        .redirect('/auth/register');
     }
     const { username, password, email } = req.body;
     const role = await User.count() < 1 ? "admin" : "user";
@@ -34,13 +34,13 @@ exports.postRegister = async function(req, res, next) {
         color: 'red',
         msg: "error create user"
       }])
-      res.status(201)
-      return res.redirect('back');
+      return res.status(201)
+        .redirect('back');
     }
     req.flash('success', [
       {
         color: 'green',
-        msg: "user created succesfully"
+        msg: "اکانت با موفقیت ساخته شد"
       }
     ])
     return res.redirect('/auth/login')
@@ -56,10 +56,11 @@ exports.getLogin = (req, res, next) => {
   try {
     const contex = {
       msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
-      title: "صفحه ورود"
+      title: "صفحه ورود",
+      preLoad: "وارد حساب خود شوید"
     }
-    res.status(200)
-    res.render('login', contex)
+    return res.status(200)
+      .render('login', contex)
   } catch (error) {
     console.error(error)
     error.status = 500;
@@ -72,15 +73,12 @@ exports.loginPost = async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       req.flash('errors', result.array());
-      res.status(400);
-      return res.redirect(req.originalUrl);
+      return res.status(400)
+        .redirect(req.originalUrl);
     }
-    res.status(200);
     req.session.userId = req.user.id;
-    req.session.user = { username: req.user.username, role: req.session.role, email: req.user.email };
-    req.session.isAuth = true;
-    res.redirect('/');
-    return
+    return res.status(200)
+      .redirect('/');
   } catch (error) {
     console.error(error)
     error.status = 500;
@@ -88,14 +86,14 @@ exports.loginPost = async (req, res, next) => {
   }
 }
 //logout user
-exports.logOutPost = function(req, res, next) {
+exports.logOutGet = function(req, res, next) {
   try {
     req.session.destroy(err => {
       if (err) {
         return res.redirect(req.originalUrl);
       }
-      res.status(302);
-      res.redirect('/auth/login');
+      res.status(302)
+        .redirect('/');
     })
   } catch (error) {
     error.status = 500;

@@ -14,4 +14,7 @@ router.route('/register')
 router.route('/login')
   .get(middlewares.isNotAuth, auth.getLogin)
   .post(middlewares.isNotAuth, validator.loginValidator, auth.loginPost)
+
+router.route('/logout')
+  .get(middlewares.isAuth, auth.logOutGet)
 module.exports = router

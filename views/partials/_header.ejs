@@ -5,7 +5,10 @@
                     <div class="top-bar-left">
                         <ul class="top-left-list">
                             <li><a href="about.html">درباره ما</a></li>
-                            <li><a href="contact.html"> (<%=currentUser?currentUser.username:""%>) حساب من</a></li>
+                            <li><a href=<%= isAuth?"/profile":"/auth/login"%>><%=currentUser?(currentUser.username):""%> حساب من</a></li>
+                            <%if(isAuth){%>
+                                <li><a href="/auth/logout"> خروج از حساب</a></li>
+                            <%}%>
                             <li><a href="wishlist.html">علاقه مندی ها</a></li>
                             <li><a href="checkout.html">تسویه</a></li>
                         </ul>
@@ -153,13 +156,4 @@
             </div>
         </div>
 </header>
-            <!-- /.Main Header -->
-            <div id="popup-search-box">
-                <div class="box-inner-wrap d-flex align-items-center">
-                    <form id="form" action="#" method="get" role="search">
-                        <input id="popup-search" type="text" name="search" placeholder="Type keywords here...">
-                    </form>
-                    <div class="search-close"><i class="fa-sharp fa-regular fa-xmark"></i></div>
-                </div>
-            </div>
 

@@ -1,0 +1,71 @@
+                    <section class="login-area pt-100 pb-100">
+                        <div class="container">
+                            <div class="login-wrap text-center">
+                                <%- include("./_messages.ejs",msgObj)%>
+                                    <h3 class="title"><%= path==='/auth/login'?'وارد اکانت خود شوید':"اکانت خود را بسازید"%></h3>
+                                    <a href="#" class="google-login"><img src="/img/icon/google.png" alt="google">با
+                                        گوگل
+                                        وارد
+                                        شوید</a>
+                                    <span class="or-text">یا</span>
+                                    <form action="<%= path==='/auth/login'?"/auth/login":"/auth/register"%>" class="login-form" method="post">
+                                      <%if(path==="/auth/register"){%>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* اسم شما</h4>
+                                                    <input type="text" id="name" name="username" class="form-control"
+                                                        placeholder="username">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* ایمیل</h4>
+                                                    <input type="text" id="email" name="email" class="form-control"
+                                                        placeholder="example@gmail.com">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* کلمه عبور</h4>
+                                                    <input type="password" id="text-2" name="password" class="form-control"
+                                                        placeholder="************">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">تکرار کلمه عبور</h4>
+                                                    <input type="password" id="text-2" name="confirmPassword"
+                                                        class="form-control" placeholder="***********">
+                                                </div>
+                                                <div class="submit-btn">
+                                                    <button class="rr-primary-btn">ثبت حساب</button>
+                                                </div>
+                                                <div class="login-btn-wrap">
+                                                    <a href="/auth/login" class="forgot">حساب کاربری دارید؟</a>
+                                                    <a class="log-in" href="/auth/login">وارد شدن</a>
+                                                </div>
+                                      <%}else{%>
+                                               <div class="form-item">
+                                                    <h4 class="form-header">لطفا ایمیل خود را وارد کنید</h4>
+                                                    <input type="text" id="text" name="email" class="form-control"
+                                                        placeholder="example@gmail.com">
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* کلمه عبور</h4>
+                                                    <input type="password" id="text-2" name="password" class="form-control"
+                                                        placeholder="******">
+                                                </div>
+                                                <div class="form-item">
+                                                    <div class="checkbox-wrap">
+                                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                                                        <label for="vehicle1"> مرا به خاطر بسپار</label><br>
+                                                    </div>
+                                                </div>
+                                                <div class="submit-btn">
+                                                    <button class="rr-primary-btn">ورود به حساب کاربری</button>
+                                                </div>
+                                                <span>
+                                                    <a href="#" style="color: black;">رمز عبور خود را گم کرده اید؟</a>
+                                                    <hr>
+                                                    <a href="/auth/register" style="color: black;">ثبت نام کنید</a>
+
+                                                </span>
+                                      <%}%>
+                                    </form>
+                            </div>
+                        </div>
+                    </section>
+

@@ -9,10 +9,6 @@ const Cart = db.define("Cart", {
     primaryKey: true,
     allowNull: false
   },
-  totalPrice: {
-    type: DataTypes.DECIMAL,
-    allowNull: true
-  },
 }, {
   updatedAt: false
 })

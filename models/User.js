@@ -38,6 +38,10 @@ const user = db.define('User', {
     postalCode: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    isBan: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     updatedAt: false

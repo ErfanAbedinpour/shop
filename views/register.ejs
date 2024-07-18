@@ -7,97 +7,26 @@
         <!-- header-area-start -->
         <%- include('./partials/_header.ejs')%>
             <!-- /#popup-search-box -->
-            <div class="mobile-side-menu rtl">
-                <div class="side-menu-content">
-                    <div class="side-menu-head">
-                        <a href='index.html'><img src="/img/logo/logo-1.png" alt="logo"></a>
-                        <button class="mobile-side-menu-close"><i class="fa-regular fa-xmark"></i></button>
-                    </div>
-                    <div class="side-menu-wrap"></div>
-                    <ul class="side-menu-list">
-                        <li><i class="fa-light fa-location-dot"></i>آدرس : <span>کرج، عظیمیه، میدان مهران</span></li>
-                        <li><i class="fa-light fa-phone"></i>شماره تماس : <a href="tel:+01569896654">026345879541</a>
-                        </li>
-                        <li><i class="fa-light fa-envelope"></i>آدرس ایمیل : <a
-                                href="mailto:info@example.com">info@example.com</a></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /.mobile-side-menu -->
-            <div id="preloader">
-                <div class="preloader-close">X</div>
-                <div class="sk-three-bounce">
-                    <div class="sk-child sk-bounce1"></div>
-                    <div class="sk-child sk-bounce2"></div>
-                    <div class="sk-child sk-bounce3"></div>
-                </div>
-            </div>
-            <!-- ./ preloader -->
-
-            <section class="page-header">
-                <div class="shape"><img src="/img/shapes/page-header-shape.png" alt="shape"></div>
-                <div class="container rtl">
-                    <div class="page-header-content">
-                        <h1 class="title">ثبت حساب</h1>
-                        <h4 class="sub-title">
-                            <span class="home">
-                                <a href="#">
-                                    <span>خانه</span>
-                                </a>
-                            </span>
-                            <span class="icon"><i class="fa-solid fa-angle-left"></i></span>
-                            <span class="inner">
-                                <span>ثبت حساب</span>
-                            </span>
-                        </h4>
+            <%- include('./partials/_search.ejs')%>
+                <!-- /.mobile-side-menu -->
+                <div id="preloader">
+                    <div class="preloader-close">X</div>
+                    <div class="sk-three-bounce">
+                        <div class="sk-child sk-bounce1"></div>
+                        <div class="sk-child sk-bounce2"></div>
+                        <div class="sk-child sk-bounce3"></div>
                     </div>
                 </div>
-            </section>
-            <!-- ./ page-header -->
-            <hr>
-            <section class="login-area pt-100 pb-100">
-                <div class="container">
-                    <div class="login-wrap text-center">
-                        <%- include("./partials/_messages.ejs",msgObj)%>
-                            <h3 class="title">حساب کاربری برای خود بسازید</h3>
-                            <a href="#" class="google-login"><img src="/img/icon/google.png" alt="google">با گوگل وارد
-                                شوید</a>
-                            <span class="or-text">یا</span>
-                            <form action="/auth/register" class="login-form" method="post">
-                                <div class="form-item">
-                                    <h4 class="form-header">* اسم شما</h4>
-                                    <input type="text" id="name" name="username" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-item">
-                                    <h4 class="form-header">* آدرس ایمیل</h4>
-                                    <input type="text" id="email" name="email" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-item">
-                                    <h4 class="form-header">* کلمه عبور</h4>
-                                    <input type="password" id="text-2" name="password" class="form-control"
-                                        placeholder="">
-                                </div>
-                                <div class="form-item">
-                                    <h4 class="form-header">تکرار کلمه عبور</h4>
-                                    <input type="password" id="text-2" name="confirmPassword" class="form-control"
-                                        placeholder="">
-                                </div>
-                                <div class="submit-btn">
-                                    <button class="rr-primary-btn">ثبت حساب</button>
-                                </div>
-                                <div class="login-btn-wrap">
-                                    <a href="/auth/login" class="forgot">حساب کاربری دارید؟</a>
-                                    <a class="log-in" href="/auth/login">وارد شدن</a>
-                                </div>
-                            </form>
-                    </div>
-                </div>
-            </section>
-            <%- include('./partials/_footer.ejs')%>
-                <!-- ./ footer-section -->
-                <div id="scroll-percentage"><span id="scroll-percentage-value"></span></div>
-                <!--scrollup-->
-                <%- include('./partials/_foot.ejs')%>
+                <!-- ./ preloader -->
+                <%- include('./partials/_preload.ejs')%>
+                    <!-- ./ page-header -->
+                    <hr>
+                    <%- include('./partials/_authForm.ejs')%>
+                        <%- include('./partials/_footer.ejs')%>
+                            <!-- ./ footer-section -->
+                            <div id="scroll-percentage"><span id="scroll-percentage-value"></span></div>
+                            <!--scrollup-->
+                            <%- include('./partials/_foot.ejs')%>
     </body>
 
 
