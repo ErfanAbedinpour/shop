@@ -26,20 +26,32 @@ const auth = (req, res, next) => {
         .then(user => {
           if (!user) {
             req.session.destroy();
-            return res.redirect('/auth/login');
+            return Promise.reject();
           }
           req.user = user;
-          next();
+          return next();
         })
     }
-    next();
+    req.flash([
+      {
+        color: 'red',
+        msg: "لطفا لاگین کنید"
+      }
+    ])
+    return res.redirect('/auth/login')
   } catch (error) {
     error.status = 500;
   }
 }
 
+const isAdmin = (req, res, next) => {
+  if (req.user.role === 'admin') return next()
+  const err = new Error("this router only avalibale for admin")
+  next(err);
+}
 module.exports = {
   isNotAuth,
   isAuth,
-  auth
+  auth,
+  isAdmin
 }

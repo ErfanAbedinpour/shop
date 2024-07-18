@@ -16,13 +16,8 @@ const Product = db.define('Product', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  sizes: {
+  StockQuantity: {
     type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  sizeType: {
-    type: DataTypes.ENUM,
-    values: ['S', 'M', 'L', 'XL', 'FR'],
     allowNull: false
   },
   star: {
@@ -31,10 +26,6 @@ const Product = db.define('Product', {
   },
   images: {
     type: DataTypes.TEXT,
-    allowNull: false
-  },
-  quantity: {
-    type: DataTypes.INTEGER,
     allowNull: false
   },
   price: {

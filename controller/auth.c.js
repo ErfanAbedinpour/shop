@@ -1,6 +1,7 @@
 const { User } = require('../models/tables');
 const { validationResult } = require('express-validator')
-const { errorMessage, messageRawList } = require('../helper/messageCls')
+const { errorMessage, messageRawList } = require('../helper/messageCls');
+const user = require('../models/User');
 //register page render
 exports.getRegister = (req, res, next) => {
   const contex = {
@@ -99,4 +100,33 @@ exports.logOutGet = function(req, res, next) {
     error.status = 500;
     next(error)
   }
+}
+
+//ban user
+exports.banPost = function(req, res, next) {
+  const { userId } = req.params;
+  if (!userId) {
+    req.flash('errors', [{
+      msg: "userId not found",
+      color: 'red'
+    }])
+    return res.redirect(req.originalUrl)
+  }
+
+  user.findOne({ where: { id: +userId } }).then(user => {
+    if (user) {
+      return user
+    }
+    req.flash('errors', [{ msg: "user not found" }])
+    res.redirect(req.originalUrl);
+  }).then(user => {
+    user.isBan = true
+    return user.save()
+  }).then(() => {
+    req.flash('success', [{
+      msg: "user ban successfully",
+      color: 'green'
+    }])
+    res.redirect(req.originalUrl)
+  })
 }

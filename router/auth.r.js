@@ -17,4 +17,6 @@ router.route('/login')
 
 router.route('/logout')
   .get(middlewares.isAuth, auth.logOutGet)
+
+router.route('/ban/:userId', middlewares.isAuth, middlewares.auth, middlewares.isAdmin, auth.banPost);
 module.exports = router
