@@ -1,21 +1,18 @@
-const { db } = require('../utils/constant')
 const { DataTypes } = require('sequelize')
+const { db } = require('../utils/constant')
 
-const attr = db.define('attribute', {
+const image = db.define('image', {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
     allowNull: false,
     autoIncrement: true
   },
-  name: {
+  filename: {
     type: DataTypes.STRING,
     allowNull: false
-  },
-  value: {
-    type: DataTypes.STRING,
-    allowNull: false,
   }
 })
 
-module.exports = attr
+
+module.exports = image

@@ -26,21 +26,21 @@ const auth = (req, res, next) => {
         .then(user => {
           if (!user) {
             req.session.destroy();
-            return Promise.reject();
+            req.flash([
+              {
+                color: 'red',
+                msg: "لطفا لاگین کنید"
+              }
+            ])
+            return res.redirect('/auth/login')
           }
           req.user = user;
-          return next();
+          next();
         })
     }
-    req.flash([
-      {
-        color: 'red',
-        msg: "لطفا لاگین کنید"
-      }
-    ])
-    return res.redirect('/auth/login')
   } catch (error) {
     error.status = 500;
+    next(error)
   }
 }
 

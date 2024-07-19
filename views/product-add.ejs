@@ -2,6 +2,8 @@
 <html class="no-js" lang="en">
 
 <%- include('./partials/_head.ejs',title)%>
+    <style>
+    </style>
 
     <body>
         <!-- header-area-start -->
@@ -10,13 +12,114 @@
                 <div id="preloader">
                     <div class="preloader-close">X</div>
                     <div class="sk-three-bounce">
-                        <div class="sk-child sk-bounce1">salam</div>
-                        <div class="sk-child sk-bounce2">bye</div>
-                        <div class="sk-child sk-bounce3">ello</div>
+                        <div class="sk-child sk-bounce1"></div>
+                        <div class="sk-child sk-bounce2"></div>
+                        <div class="sk-child sk-bounce3"></div>
                     </div>
                 </div>
-                <!-- ./ page-header -->
-                <%- include('./partials/_add-Form.ejs')%>
+                <!-- ./ preloader -->
+                <%- include('./partials/_preload.ejs')%>
+                    <!-- ./ page-header -->
+                    <section class="login-area pt-100 pb-100">
+                        <div class="container">
+                            <div class="login-wrap text-center">
+                                <%- include("./partials/_messages.ejs",msgObj)%>
+                                    <h3 class="title">اطلاعات کالا خود را وارد کنید</h3>
+                                    <span class="or-text">یا</span>
+                                    <form action="/product/add" class="login-form" method="post"
+                                        enctype="multipart/form-data">
+                                        <div class="form-item">
+                                            <h4 class="form-header">* دسته بندی کالا</h4>
+                                            <select id="category" size="<%= category.length%>">
+                                                <%category.forEach(c=>{%>
+                                                    <option value="">
+                                                        <%= c.name%>
+                                                    </option>
+                                                    <%})%>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="form-item">
+                                            <h4 class="form-header">* نام کالا</h4>
+                                            <input type="text" id="name" name="title" class="form-control"
+                                                placeholder="">
+                                        </div>
+                                        <div class="form-item">
+                                            <h4 class="form-header">* توضیحات کالا</h4>
+                                            <textarea type="text" name='description' class="form-control"></textarea>
+                                        </div>
+                                        <div class="form-item">
+                                            <h4 class="form-header">* قیمت کالا</h4>
+                                            <input type="number" min="1" step="any" name='price' class="form-control" />
+                                        </div>
+                                        <div class="form-item">
+                                            <h4 class="form-header">* تعداد موجودی</h4>
+                                            <input type="number" id="text-2" name="stockQuantity" class="form-control">
+                                        </div>
+                                        <div class="form-item">
+                                            <h4 class="form-header">عکس کالا در صفحه اصلی را وارد کنید</h4>
+                                            <input type="file" id="title-image" name="titleImage" class="form-control"
+                                                required>
+                                        </div>
+                                        <div class="form-item" id="imageDiv">
+                                            <h4 class="form-header">عکس کالا در را وارد کنید</h4>
+                                            <input type="file" id="image" name="images" class="form-control">
+                                        </div>
+                                        <div id='attr'></div>
+                                        <div class="submit-btn">
+                                            <button class="rr-primary-btn">افزودن کالا</button>
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                        <script>
+                            const imageDiv = document.querySelector('#imageDiv');
+                            let img = document.querySelector('#image')
+                            let counter = 1;
+                            const attrEl = document.querySelector('#attr');
+                            attrEl.innerHTML = "";
+                            function inputNew(el) {
+                                el.addEventListener('change', () => {
+                                    imageDiv.insertAdjacentHTML('beforeend', `
+                                          <hr>
+                                            <h4 class="form-header">عکس بعدی کالا در را وارد کنید</h4>
+                                            <input type="file" id="image" name="titleImage" class="form-control">
+                                            `)
+                                    el = Array.from(document.querySelectorAll(`#image`)).at(-1);
+                                    if (counter < 3) {
+                                        counter++
+                                        inputNew(el)
+                                        console.log(counter)
+                                    }
+                                })
+                            }
+                            inputNew(img);
+
+                            function selectOption() {
+                                const el = document.querySelector('select');
+                                const injectElement = `<h4 class="form-header">ویژگی های کالای خود را به صورت نام و مقدار بنویسید</h4>
+                                <div class="row">
+                                    <div class="column" style="background-color:#aaa;">
+                                        <p style="text-align:center;">نام</p>
+                                        <input type="text" id="att-key">Some text..</input>
+                                    </div>
+                                    <div class="column" style="background-color:#bbb;">
+                                        <p style="text-align:center;">مقدار</p>
+                                        <input type="text" id="att-value">Some text..</input>
+                                    </div>
+                                </div>`
+                                attrEl.insertAdjacentHTML('beforeend', injectElement);
+                            }
+
+                            document.querySelector('select').onchange = selectOption
+
+
+
+
+                        </script>
+                    </section>
+
                     <%- include('./partials/_footer.ejs')%>
                         <%- include('./partials/_foot.ejs')%>
     </body>

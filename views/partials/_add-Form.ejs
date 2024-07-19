@@ -12,9 +12,11 @@
                                                 </div>
                                                 <div class="form-item">
                                                     <h4 class="form-header">* توضیحات کالا</h4>
-                                                    <textarea type="text" name='description' class="form-control"
-                                                        placeholder="example@gmail.com">
-                                                      </textarea>
+                                                    <textarea type="text" name='description' class="form-control"></textarea>
+                                                </div>
+                                                <div class="form-item">
+                                                    <h4 class="form-header">* قیمت کالا</h4>
+                                                    <input type="number" min="1" step="any" name='price' class="form-control"/>
                                                 </div>
                                                 <div class="form-item">
                                                     <h4 class="form-header">* تعداد موجودی</h4>
@@ -39,6 +41,7 @@
                         <script>
                           const imageDiv = document.querySelector('#imageDiv');
                                   let img = document.querySelector('#image')
+                                  let counter = 1;
                                   function inputNew(el) {
                                       el.addEventListener('change', () => {
                                         imageDiv.insertAdjacentHTML('beforeend', `
@@ -47,7 +50,11 @@
                                             <input type="file" id="image" name="titleImage" class="form-control">
                                             `)
                                         el = Array.from(document.querySelectorAll(`#image`)).at(-1);
-                                        inputNew(el)
+                                        if(counter<3){
+                                            counter++
+                                            inputNew(el)
+                                            console.log(counter)
+                                        }
                                       })
                                    }                       
                                    inputNew(img);

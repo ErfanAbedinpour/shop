@@ -1,3 +1,4 @@
+const tables = require('../models/tables');
 const table = require('../models/tables');
 
 async function fetchData() {
@@ -31,6 +32,12 @@ async function fetchData() {
   ])
   man.addCategories(manCategory)
   women.addCategories(womenCategory)
+
+  await tables.User.create({
+    username: "erfan",
+    email: "milad.wtf44@gmail.com",
+    password: "12341234"
+  })
   console.log('all data fetched succesfuuly')
 
 }

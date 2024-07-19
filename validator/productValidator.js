@@ -5,14 +5,15 @@ exports.createProductValidator = [
     .notEmpty()
     .withMessage('تایتل فیلد اجباری است')
     .bail()
-    .isLength({ min: 6 })
+    .isLength({ min: 4 })
     .withMessage('حداقل باید ۶ کارکتر باشد تایتل')
     .bail()
   ,
-  body('decription')
-    .notEmpty('')
+  body('description')
+    .notEmpty()
     .withMessage('لطفا توضیحات محصول را بنویسید')
     .bail()
+    .customSanitizer(des => des.trim())
     .isLength({ min: 8 })
     .withMessage('توضیحات حداقل باید ۸ کارکتر باشد')
   ,

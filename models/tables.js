@@ -1,4 +1,3 @@
-const { DataType, DataTypes } = require('sequelize');
 const Cart = require('./Cart');
 const Category = require('./Category');
 const Comment = require('./Comment');
@@ -10,14 +9,19 @@ const Type = require('./Type');
 const User = require('./User');
 const ProductCart = require('./ProductCart')
 const attr = require('./attribute')
+const image = require('./images')
 
 //1:1
 Cart.belongsTo(User)
 User.hasOne(Cart)
+Category.hasOne(Product);
+Product.belongsTo(Category);
 //1:m
+Product.hasMany(image);
+image.belongsTo(Product)
 
-User.hasMany(Category)
-Category.belongsTo(User)
+User.hasMany(Category);
+Category.belongsTo(User);
 
 User.hasMany(Type)
 Type.belongsTo(User)

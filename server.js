@@ -37,7 +37,7 @@ app.use(async (req, res, next) => {
     let currentUser = null;
     const isAuth = req.session?.userId ? true : false;
     if (isAuth) {
-        currentUser = await user.findOne(({ where: { id: req.session.userId } }));
+        currentUser = await tables.User.findOne(({ where: { id: req.session.userId } }));
         if (!currentUser) {
             req.session.destroy()
         }
@@ -51,11 +51,17 @@ app.use(async (req, res, next) => {
     next()
 })
 
+//home route
 const homeRouter = require('./router/home.r')
 app.use(homeRouter);
+//auth route
 const authRouter = require('./router/auth.r');
-const user = require('./models/User');
 app.use('/auth', authRouter);
+//product route
+const porductRouter = require('./router/product.r');
+const { table } = require('console');
+app.use('/product', porductRouter)
+
 
 
 app.use((req, res, next) => {
