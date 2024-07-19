@@ -1,48 +1,46 @@
 const { join, extname } = require('path');
-const { exists, mkdir } = require('fs');
-const { promisify } = require('util')
-const multer = require('multer')
+const { existsSync, mkdirSync } = require('fs');
+const { diskStorage } = require('multer')
 
-async function destPath(resource) {
+function destPath(resource) {
   const pathName = `${resource}sImage`;
   const fullPath = join(__dirname, '..', 'public', pathName);
-  const isExsist = await promisify(exists)(fullPath);
+  const isExsist = existsSync(fullPath)
   if (!isExsist) {
-    await promisify(mkdir)(fullPath)
+    mkdirSync(fullPath)
     return fullPath;
   }
   return fullPath;
 }
 
-async function createUploader(resource, validExtnames = ['.img', '.jpg', '.jpeg']) {
-  const fullPath = await destPath(resource);
-  const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-      cb(null, fullPath)
+function createUploader(resource, validExtnames = ['.img', '.jpg', '.jpeg']) {
+  const path = destPath(resource)
+  const storage = diskStorage({
+    destination: function(_, __, cb) {
+      cb(null, path)
     },
-    filename: function(req, file, cb) {
+    filename: function(_, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      const extName = extname(file.originalname);
+      cb(null, file.fieldname + '-' + uniqueSuffix + `${extName}`);
     },
   })
   const filter = (req, file, cb) => {
     const fileSize = parseInt(req.headers["content-length"]);
     if (!validExtnames.includes(extname(file.originalname))) {
-      return cb(new Error('فرمت فایل وارد شده صحیح نمیباشد'))
+      return cb(new Error(`فرمت فایل وارد شده صحیح نمیباشد ${file.originalname}`), false)
     }
     if (fileSize > (1048576 * 3)) {
-      return cb(new Error('حجم فایل باید کمتر از ۳ مگابایت باشد'));
+      return cb(new Error('حجم فایل باید کمتر از ۳ مگابایت باشد'), false);
     }
     return cb(null, true)
-
   }
-  return multer({
+  return {
     storage,
     fileFilter: filter,
-    limits: { fileSize: 3 * 1024 * 1024 }
-  })
+    limit: { fileSize: (3 * 1024 * 1024) }
+  }
 }
-
 
 module.exports = createUploader;
 
