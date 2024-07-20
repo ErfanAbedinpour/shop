@@ -1,4 +1,4 @@
-## Nodejs Shop project with express, sequlize, mysql 
+## Nodejs Shop project with express, sequlize, mysql,redis
 ## sessionBase authentication and authorization
 
 ### TODO
