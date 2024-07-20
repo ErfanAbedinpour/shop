@@ -1,5 +1,4 @@
 ## Nodejs Shop project with express, sequlize, mysql 
-
 ## sessionBase authentication and authorization
 
 ### TODO
@@ -43,4 +42,5 @@ To Run first you sure your node **node>23**
 ```sh
   npm start
 ```
+
 
