@@ -1,5 +1,5 @@
 const { body } = require('express-validator')
-
+const tables = require('../models/tables')
 exports.createProductValidator = [
   body('title')
     .notEmpty()
@@ -31,4 +31,18 @@ exports.createProductValidator = [
     .withMessage('لطفا مبلغ معتبر وارد کنید')
     .bail()
   ,
+  body('category')
+    .notEmpty()
+    .withMessage('دسته بندی اجباری است')
+    .bail()
+    .customSanitizer(id => +id)
+    .custom(async (cate, { req }) => {
+      const category = await tables.Category.findOne({ where: { id: cate } })
+      if (!category) {
+        throw new Error('لطفا دسته بندی معتبر وارد کنید')
+      }
+      req.category = category.id;
+      return true
+    })
+
 ]

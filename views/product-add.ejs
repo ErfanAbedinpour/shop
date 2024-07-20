@@ -2,8 +2,6 @@
 <html class="no-js" lang="en">
 
 <%- include('./partials/_head.ejs',title)%>
-    <style>
-    </style>
 
     <body>
         <!-- header-area-start -->
@@ -30,9 +28,9 @@
                                         enctype="multipart/form-data">
                                         <div class="form-item">
                                             <h4 class="form-header">* دسته بندی کالا</h4>
-                                            <select id="category" size="<%= category.length%>">
+                                            <select id="category" name="category" size="<%= category.length%>">
                                                 <%category.forEach(c=>{%>
-                                                    <option value="">
+                                                    <option value="<%= c.id%>">
                                                         <%= c.name%>
                                                     </option>
                                                     <%})%>
@@ -59,67 +57,51 @@
                                         </div>
                                         <div class="form-item">
                                             <h4 class="form-header">عکس کالا در صفحه اصلی را وارد کنید</h4>
-                                            <input type="file" id="title-image" name="titleImage" class="form-control"
-                                                required>
+                                            <input type="file" id="title-image" name="titleImage" class="form-control">
                                         </div>
                                         <div class="form-item" id="imageDiv">
                                             <h4 class="form-header">عکس کالا در را وارد کنید</h4>
                                             <input type="file" id="image" name="images" class="form-control">
                                         </div>
-                                        <div id='attr'></div>
                                         <div class="submit-btn">
-                                            <button class="rr-primary-btn">افزودن کالا</button>
+                                            <button class="rr-primary-btn" type="submit">افزودن کالا</button>
                                         </div>
                                     </form>
                             </div>
                         </div>
                         <script>
                             const imageDiv = document.querySelector('#imageDiv');
-                            let img = document.querySelector('#image')
                             let counter = 1;
-                            const attrEl = document.querySelector('#attr');
-                            attrEl.innerHTML = "";
+                            let img = document.querySelector(`#image`);
                             function inputNew(el) {
-                                el.addEventListener('change', () => {
+                                const change = () => {
+                                    counter++
                                     imageDiv.insertAdjacentHTML('beforeend', `
                                           <hr>
                                             <h4 class="form-header">عکس بعدی کالا در را وارد کنید</h4>
-                                            <input type="file" id="image" name="titleImage" class="form-control">
+                                            <input type="file" id="image${counter}" class="form-control">
                                             `)
-                                    el = Array.from(document.querySelectorAll(`#image`)).at(-1);
+                                    el.removeEventListener('change', change);
+                                    el = document.querySelector(`#image${counter}`);
                                     if (counter < 3) {
-                                        counter++
                                         inputNew(el)
-                                        console.log(counter)
                                     }
-                                })
+                                }
+                                el.addEventListener('change', change);
                             }
                             inputNew(img);
 
-                            function selectOption() {
-                                const el = document.querySelector('select');
-                                const injectElement = `<h4 class="form-header">ویژگی های کالای خود را به صورت نام و مقدار بنویسید</h4>
-                                <div class="row">
-                                    <div class="column" style="background-color:#aaa;">
-                                        <p style="text-align:center;">نام</p>
-                                        <input type="text" id="att-key">Some text..</input>
-                                    </div>
-                                    <div class="column" style="background-color:#bbb;">
-                                        <p style="text-align:center;">مقدار</p>
-                                        <input type="text" id="att-value">Some text..</input>
-                                    </div>
-                                </div>`
-                                attrEl.insertAdjacentHTML('beforeend', injectElement);
-                            }
+                            //function selectOption() {
+                                //const el = document.querySelector('select');
+                                //const injectElement = ``
+                                //attrEl.insertAdjacentHTML('beforeend', injectElement);
+                            //}
 
-                            document.querySelector('select').onchange = selectOption
-
-
-
-
+                            //document.querySelector('select').onchange = selectOption
                         </script>
                     </section>
 
+                    </script>
                     <%- include('./partials/_footer.ejs')%>
                         <%- include('./partials/_foot.ejs')%>
     </body>

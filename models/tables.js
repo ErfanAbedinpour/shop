@@ -9,7 +9,7 @@ const Type = require('./Type');
 const User = require('./User');
 const ProductCart = require('./ProductCart')
 const attr = require('./attribute')
-const image = require('./images')
+const image = require('./images');
 
 //1:1
 Cart.belongsTo(User)
@@ -72,5 +72,6 @@ module.exports = {
   Factor,
   ProductCart,
   Type,
-  Attribute: attr
+  Attribute: attr,
+  Image: image
 }
