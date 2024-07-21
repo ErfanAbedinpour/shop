@@ -7,20 +7,19 @@
 - [x] access to admin to create user and product
 - [x] design all entity and relation
 - [x] save session to redis
-- [ ] add saller role for user user has saller user and admin
-- [ ] show product details
-- [ ] show all prodfile informaion to admin page
+- [x] add product by admin
+- [x] product page create 
+- [x] ban user from admin
+- [x] better template structure like auth form and fix index page bug
+- [x] create all models and relations 
 - [ ] delete product from admin
+- [ ] show product details
+- [ ] show all profile informaion to admin page
 - [ ] fix redis option redis remove all session when restarted
 - [ ] edit user profile
 - [ ] show all user to admin
 - [ ] reset password
-- [x] add product by admin
-- [x] product page create 
 - [ ]  admin page for show dashboard
-- [x] ban user from admin
-- [x] better template structure like auth form and fix index page bug
-- [x] create all models and relations 
 - [ ] add 1000 products
 - [ ] render product page
 - [ ] edit userprofile 
