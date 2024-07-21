@@ -16,12 +16,6 @@ exports.getRegister = (req, res, next) => {
 //post register
 exports.postRegister = async function(req, res, next) {
   try {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-      req.flash('errors', result.array());
-      return res.status(400)
-        .redirect('/auth/register');
-    }
     const { username, password, email } = req.body;
     const role = await User.count() < 1 ? "admin" : "user";
     const isFinish = await User.create({
@@ -71,12 +65,6 @@ exports.getLogin = (req, res, next) => {
 //login postl
 exports.loginPost = async (req, res, next) => {
   try {
-    const result = validationResult(req);
-    if (!result.isEmpty()) {
-      req.flash('errors', result.array());
-      return res.status(400)
-        .redirect(req.originalUrl);
-    }
     req.session.userId = req.user.id;
     return res.status(200)
       .redirect('/');
