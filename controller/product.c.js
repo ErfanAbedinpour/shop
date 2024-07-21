@@ -1,7 +1,7 @@
-const { validationResult } = require('express-validator')
 const { messageRawList, errorMessage } = require('../helper/messageCls')
+const fs = require('fs').promises
+const path = require('path');
 const tables = require('../models/tables');
-
 
 exports.getCreate = (req, res, next) => {
   const msgObj = messageRawList(req.flash('success')) ?? errorMessage(req.flash('errors'));
@@ -13,23 +13,16 @@ exports.getCreate = (req, res, next) => {
       category
     }
     res.render('product-add', contex);
-
   });
 
 }
 
 exports.createPost = async (req, res, next) => {
   try {
-    const result = validationResult(req)
-    if (!result.isEmpty()) {
-      console.log(res
-      )
-      req.flash('errors', result.array()
-      )
-      return res.redirect(req.originalUrl)
-    }
-    const titleImage = req.files.titleImage[0].filename;
-    const pImages = req.files.images.map(img => { return { filename: img.filename } });
+    // TODO: read buffer from from memory and with sharp package compress and save to destPath
+    // TODO: req.files.titleImage[0].buffer read buffer from memory Title
+    // TODO:   req.files.images.map(img => { return { filename: img.buffer}}) read buffer product images
+    //
     const { title, description, price, stockQuantity } = req.body;
     const product = await tables.Product.create({
       titleImage,
@@ -46,6 +39,38 @@ exports.createPost = async (req, res, next) => {
       color: 'green'
     }])
     res.redirect(req.originalUrl);
+  } catch (error) {
+    console.error(error)
+    error.status = 500;
+    next(error)
+  }
+}
+
+exports.deletePost = async (req, res, next) => {
+  try {
+    const { productId } = req.params
+    if (!productId) {
+      req.flash('errors', [{ msg: "درخواست معتبر نیست", color: 'red' }])
+      return res.status(401).redirect(req.originalUrl)
+    }
+    const product = await tables.Product.findOne({ where: { id: +productId } })
+    if (!product) {
+      req.flash('errors', [{ msg: "کالا پیدا نشد", color: 'red' }])
+      return res.json({ msg: "product not found" })
+    }
+    const titleImage = path.join(__dirname, '..', 'public', 'productsImage', product.titleImage);
+    fs.stat(titleImage)
+      .then(async () => {
+        await fs.unlink(titleImage);
+        Promise.resolve();
+      })
+      .catch(async err => {
+        Promise.resolve()
+      })
+    await product.destroyImages()
+    await product.destroy()
+    await product.save()
+    res.json({ product })
   } catch (error) {
     error.status = 500;
     next(error)
