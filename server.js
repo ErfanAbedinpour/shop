@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'))
 
 
-app.use(async (req, res, next) => {
+app.use(async (req, _, next) => {
     let currentUser = null;
     const isAuth = req.session?.userId ? true : false;
     if (isAuth) {
@@ -59,7 +59,6 @@ const authRouter = require('./router/auth.r');
 app.use('/auth', authRouter);
 //product route
 const porductRouter = require('./router/product.r');
-const { table } = require('console');
 app.use('/product', porductRouter)
 
 
