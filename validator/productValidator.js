@@ -1,5 +1,7 @@
-const { body } = require('express-validator')
+const { body, validationResult } = require('express-validator')
 const tables = require('../models/tables')
+
+
 exports.createProductValidator = [
   body('title')
     .notEmpty()
@@ -32,8 +34,12 @@ exports.createProductValidator = [
     .bail()
   ,
   body('category')
-    .notEmpty()
-    .withMessage('دسته بندی اجباری است')
+    .custom(value => {
+      if (!value) {
+        throw new Error('لطفا دسته بندی را وارد کنید')
+      }
+      return true
+    })
     .bail()
     .customSanitizer(id => +id)
     .custom(async (cate, { req }) => {
@@ -44,5 +50,5 @@ exports.createProductValidator = [
       req.category = category.id;
       return true
     })
-
+  ,
 ]
