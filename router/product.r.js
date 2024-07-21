@@ -6,11 +6,12 @@ const createUploaderOption = require('../utils/uploader');
 const multer = require('multer')
 
 const router = Router();
-
-let uploader = multer(createUploaderOption('product')).fields([
+// createUploaderOption('product')
+let uploader = multer({ storage: multer.memoryStorage() }, {
+}).fields([
   {
     name: "titleImage",
-    maxCount: 1
+    maxCount: 1,
   },
   {
     name: "images",
@@ -18,20 +19,35 @@ let uploader = multer(createUploaderOption('product')).fields([
   }
 ]);
 
-router.route('/add')
-  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, (req, res, next) => {
-    uploader(req, res, function(err) {
-      if (err instanceof multer.MulterError) {
-        if (err.code === 'LIMIT_UNEXPECTED_FILE') {
-          err.message = 'تعداد فایل حداکثر میتواند 4 تا باشد'
-          err.status = 401
-          next(err);
-        }
+const uploaderErrorHandler = (validations) => (req, res, next) => {
+  uploader(req, res, async function(err) {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        req.flash('errors', [{ msg: "تعداد عکس برای کالا نمیتواند بیشتراز ۴ تا باشد" }])
+        return res.redirect(req.originalUrl)
       }
-      next()
-    })
-  }, validator.createProductValidator, productController.createPost)
+    }
+    if (Object.keys(req.files).length < 2) {
+      req.flash('errors', [{ msg: "لطفا حداقل یک فایل برای تایتل و کالا اپلود کنید" }])
+      return res.status(400).redirect(req.originalUrl)
+    }
+    for (const validation of validations) {
+      const result = await validation.run(req)
+      if (!result.isEmpty()) {
+        req.flash('errors', result.array())
+        return res.status(400).redirect(req.originalUrl)
+      }
+    }
+    next()
+  })
+}
+
+router.route('/add')
+  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, uploaderErrorHandler(validator.createProductValidator), productController.createPost)
   .get(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, productController.getCreate)
 
+router
+  .route('/delete/:productId')
+  .post(productController.deletePost)
 
 module.exports = router

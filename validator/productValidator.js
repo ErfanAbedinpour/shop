@@ -50,5 +50,6 @@ exports.createProductValidator = [
       req.category = category.id;
       return true
     })
+
   ,
 ]

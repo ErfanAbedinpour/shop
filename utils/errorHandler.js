@@ -5,7 +5,7 @@ function checkValidatorResult(redirectUrl) {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       req.flash('errors', result.array())
-      return res.redirect(redirectUrl);
+      return res.status(400).redirect(redirectUrl);
     }
     next();
   }
