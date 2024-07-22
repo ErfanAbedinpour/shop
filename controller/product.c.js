@@ -2,6 +2,8 @@ const { messageRawList, errorMessage } = require('../helper/messageCls')
 const fs = require('fs').promises
 const path = require('path');
 const tables = require('../models/tables');
+const compressImg = require('../helper/compressImg');
+
 
 exports.getCreate = (req, res, next) => {
   const msgObj = messageRawList(req.flash('success')) ?? errorMessage(req.flash('errors'));
@@ -19,10 +21,18 @@ exports.getCreate = (req, res, next) => {
 
 exports.createPost = async (req, res, next) => {
   try {
-    // TODO: read buffer from from memory and with sharp package compress and save to destPath
-    // TODO: req.files.titleImage[0].buffer read buffer from memory Title
-    // TODO:   req.files.images.map(img => { return { filename: img.buffer}}) read buffer product images
-    //
+    const imagesFilename = [];
+    const { filename: titleImage } = await compressImg(req.files.titleImage[0], 'productTitle');
+    req.files.images.forEach(async img => {
+      const { filename } = await compressImg(img, 'productImages');
+      if (!filename) {
+        req.flash('errors', [{
+          msg: `faild to upload ${img.originalName}`
+        }])
+        return res.redirect(req.originalUrl)
+      }
+      imagesFilename.push({ filename });
+    })
     const { title, description, price, stockQuantity } = req.body;
     const product = await tables.Product.create({
       titleImage,
@@ -33,7 +43,7 @@ exports.createPost = async (req, res, next) => {
       CategoryId: req.category
     })
     await req.user.addProduct(product);
-    await product.addImages(await tables.Image.bulkCreate(pImages));
+    await product.addImages(await tables.Image.bulkCreate(imagesFilename));
     req.flash('success', [{
       msg: "کالا با موقیت اضافه شد",
       color: 'green'
@@ -76,3 +86,4 @@ exports.deletePost = async (req, res, next) => {
     next(error)
   }
 }
+
