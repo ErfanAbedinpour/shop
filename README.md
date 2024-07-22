@@ -14,6 +14,8 @@
 - [x] create all models and relations 
 - [x] compress product images and save to file
 - [x] validation product information and image info before create 
+- [ ] write test by jest 
+- [ ] write init Data for insert product in DB
 - [ ] fix redis option redis remove all session when restarted
 - [ ] delete product from admin
 - [ ] show product details
