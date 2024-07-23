@@ -1,5 +1,4 @@
 const { Sequelize } = require('sequelize');
-const { createClient } = require('redis')
 
 const username = process.env.DBUSERNAME;
 const pass = process.env.DBPASS
@@ -11,14 +10,5 @@ exports.db = new Sequelize(name, username, pass, {
     logging: false
 })
 
-const redis = createClient();
-
-redis.connect().then(() => {
-    console.log('redis connected succesfully')
-}).catch(() => {
-    console.error('faild to connect redis')
-})
-
-exports.redis = redis
 
 

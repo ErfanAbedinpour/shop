@@ -19,7 +19,6 @@
 - [ ] write init Data for insert product in DB
 - [ ] show product details
 - [ ] show all profile informaion to admin page
-- [ ] fix redis option redis remove all session when restarted
 - [ ] edit user profile
 - [ ] show all user to admin
 - [ ] reset password
