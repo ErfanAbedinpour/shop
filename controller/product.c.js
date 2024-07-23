@@ -5,6 +5,7 @@ const tables = require('../models/tables');
 const compressImg = require('../helper/compressImg');
 
 
+//create product page render
 exports.getCreate = (req, res, next) => {
   const msgObj = messageRawList(req.flash('success')) ?? errorMessage(req.flash('errors'));
   tables.Category.findAll().then(category => {
@@ -19,23 +20,11 @@ exports.getCreate = (req, res, next) => {
 
 }
 
+// remove product logic
 exports.createPost = async (req, res, next) => {
   try {
-    const imagesFilename = [];
-    const { filename: titleImage } = await compressImg(req.files.titleImage[0], 'productTitle');
-    req.files.images.forEach(async img => {
-      const { filename } = await compressImg(img, 'productImages');
-      if (!filename) {
-        req.flash('errors', [{
-          msg: `faild to upload ${img.originalName}`
-        }])
-        return res.redirect(req.originalUrl)
-      }
-      imagesFilename.push({ filename });
-    })
     const { title, description, price, stockQuantity } = req.body;
     const product = await tables.Product.create({
-      titleImage,
       title,
       describe: description,
       price,
@@ -43,7 +32,12 @@ exports.createPost = async (req, res, next) => {
       CategoryId: req.category
     })
     await req.user.addProduct(product);
-    await product.addImages(await tables.Image.bulkCreate(imagesFilename));
+    const imgArray = req.files.product.concat(req.files.title);
+    const imgPromises = await (imgArray.map(img => {
+      return compressImg(img, 'productImages');
+    }))
+    const imagesFilename = (await Promise.all(imgPromises)).map(arr => { return { type: arr.type, filename: arr.filename } })
+    await product.addProductImage(await tables.Image.bulkCreate(imagesFilename));
     req.flash('success', [{
       msg: "کالا با موقیت اضافه شد",
       color: 'green'
@@ -55,7 +49,7 @@ exports.createPost = async (req, res, next) => {
     next(error)
   }
 }
-
+//delete product login
 exports.deletePost = async (req, res, next) => {
   try {
     const { productId } = req.params
@@ -63,24 +57,21 @@ exports.deletePost = async (req, res, next) => {
       req.flash('errors', [{ msg: "درخواست معتبر نیست", color: 'red' }])
       return res.status(401).redirect(req.originalUrl)
     }
-    const product = await tables.Product.findOne({ where: { id: +productId } })
+    const product = await tables.Product.findOne({ where: { id: +productId }, include: "productImage" })
     if (!product) {
       req.flash('errors', [{ msg: "کالا پیدا نشد", color: 'red' }])
       return res.json({ msg: "product not found" })
     }
-    const titleImage = path.join(__dirname, '..', 'public', 'productsImage', product.titleImage);
-    fs.stat(titleImage)
+    const filenamesToRemove = product.productImage.map(async img => {
+      const imgPath = path.join(__dirname, '../public', 'productImages', img.filename);
+      return fs.unlink(imgPath).then(() => Promise.resolve()).catch(() => Promise.resolve());
+    });
+    Promise.all(filenamesToRemove)
       .then(async () => {
-        await fs.unlink(titleImage);
-        Promise.resolve();
+        await product.destroy()
+        await product.save()
+        res.json({ status: true, msg: "product removed succesfully", product })
       })
-      .catch(async err => {
-        Promise.resolve()
-      })
-    await product.destroyImages()
-    await product.destroy()
-    await product.save()
-    res.json({ product })
   } catch (error) {
     error.status = 500;
     next(error)

@@ -14,12 +14,12 @@
 - [x] create all models and relations 
 - [x] compress product images and save to file
 - [x] validation product information and image info before create 
+- [x] delete product from admin
 - [ ] write test by jest 
 - [ ] write init Data for insert product in DB
-- [ ] fix redis option redis remove all session when restarted
-- [ ] delete product from admin
 - [ ] show product details
 - [ ] show all profile informaion to admin page
+- [ ] fix redis option redis remove all session when restarted
 - [ ] edit user profile
 - [ ] show all user to admin
 - [ ] reset password

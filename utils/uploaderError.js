@@ -14,7 +14,7 @@ const uploaderErrorHandler = (validations, uploader) => (req, res, next) => {
       req.flash('errors', [{ msg: "لطفا حداقل یک فایل برای تایتل و کالا اپلود کنید" }])
       return res.status(400).redirect(req.originalUrl)
     }
-    for (const img of req.files.titleImage) {
+    for (const img of req.files.title) {
       if (!validateExt.includes(path.extname(img.originalname))) {
         req.flash("errors", [{
           msg: ` ${img.originalname} .png .jpeg .jpg .img فرمت های معتبر`
@@ -22,7 +22,7 @@ const uploaderErrorHandler = (validations, uploader) => (req, res, next) => {
         return res.redirect(req.originalUrl);
       }
     }
-    for (const img of req.files.images) {
+    for (const img of req.files.product) {
       if (!validateExt.includes(path.extname(img.originalname))) {
         req.flash("errors", [{
           msg: ` ${img.originalname} .png .jpeg .jpg .img فرمت های معتبر`

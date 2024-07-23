@@ -11,6 +11,11 @@ const image = db.define('image', {
   filename: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  type: {
+    type: DataTypes.ENUM,
+    values: ['title', 'product'],
+    allowNull: false,
   }
 })
 

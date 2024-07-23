@@ -9,11 +9,11 @@ const router = Router();
 let uploader = multer({ storage: multer.memoryStorage() }, {
 }).fields([
   {
-    name: "titleImage",
+    name: "title",
     maxCount: 1,
   },
   {
-    name: "images",
+    name: "product",
     maxCount: 4
   }
 ]);

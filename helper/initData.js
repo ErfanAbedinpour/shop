@@ -36,7 +36,8 @@ async function fetchData() {
   await tables.User.create({
     username: "erfan",
     email: "milad.wtf44@gmail.com",
-    password: "12341234"
+    password: "12341234",
+    role: 'admin'
   })
   console.log('all data fetched succesfuuly')
 

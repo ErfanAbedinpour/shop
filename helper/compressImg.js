@@ -14,6 +14,7 @@ const createDirectory = function(resourceName) {
 
 function compressImg(img, foldername) {
   return new Promise((resolve, reject) => {
+    const type = img.fieldname;
     const fullPath = createDirectory(foldername)
     const uniquName = img.originalname + '-' + Math.round((Math.random()) * Date.now() * 1e4) + path.extname(img.originalname);
     sharp(img.buffer)
@@ -24,6 +25,7 @@ function compressImg(img, foldername) {
       .toFile(path.join(fullPath, uniquName))
       .then((data) => {
         data.filename = uniquName;
+        data.type = type;
         resolve(data);
       }).catch(err => {
         reject(err)

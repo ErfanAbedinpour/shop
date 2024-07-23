@@ -17,7 +17,7 @@ User.hasOne(Cart)
 Category.hasOne(Product);
 Product.belongsTo(Category);
 //1:m
-Product.hasMany(image);
+Product.hasMany(image, { as: "productImage", onDelete: "CASCADE" });
 image.belongsTo(Product)
 
 User.hasMany(Category);
