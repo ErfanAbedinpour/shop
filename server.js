@@ -1,45 +1,28 @@
 require('dotenv').config();
 const express = require('express');
 const tables = require('./models/tables');
-const session = require("express-session");
-const RedisStore = require("connect-redis").default
-const { redis } = require('./utils/constant');
-const flash = require('connect-flash');
-const logger = require('morgan')
 const path = require('path');
+const middlewares = require('./config/midConfig')
 require('dotenv').config({ path: "./.env" });
 const app = express()
 
-const store = new RedisStore({
-    client: redis,
-    prefix: "session:"
-})
-
-app.use(
-    session({
-        store: store,
-        secret: process.env.SECRET,
-        resave: false,
-        saveUninitialized: false
-    })
-);
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }));
-app.use(flash());
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(logger('dev'))
+app.use(middlewares);
 
 
 app.use(async (req, _, next) => {
     let currentUser = null;
-    const isAuth = req.session?.userId ? true : false;
+    const isAuth = req.session.userId || false
     if (isAuth) {
         currentUser = await tables.User.findOne(({ where: { id: req.session.userId } }));
         if (!currentUser) {
-            req.session.destroy()
+            req.session.destroy((err) => {
+                if (err) throw new Error(err)
+            })
         }
     }
     const localPaylaod = {
@@ -47,7 +30,7 @@ app.use(async (req, _, next) => {
         path: req.path,
         currentUser: currentUser
     }
-    app.locals = localPaylaod
+    app.locals = localPaylaod;
     next()
 })
 

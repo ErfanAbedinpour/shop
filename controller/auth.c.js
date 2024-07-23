@@ -1,7 +1,13 @@
 const { User } = require('../models/tables');
-const { validationResult } = require('express-validator')
 const { errorMessage, messageRawList } = require('../helper/messageCls');
 const user = require('../models/User');
+
+function redirect(req, res, status = 200, to = null) {
+  to = to || req.originalUrl
+  return req.session.save(() => {
+    res.status(status).redirect(to)
+  })
+}
 //register page render
 exports.getRegister = (req, res, next) => {
   const contex = {
@@ -12,7 +18,6 @@ exports.getRegister = (req, res, next) => {
   res.status(200)
     .render('register', contex)
 }
-
 //post register
 exports.postRegister = async function(req, res, next) {
   try {
@@ -29,8 +34,7 @@ exports.postRegister = async function(req, res, next) {
         color: 'red',
         msg: "error create user"
       }])
-      return res.status(201)
-        .redirect('back');
+      return redirect(req, res, 401, 'back');
     }
     req.flash('success', [
       {
@@ -38,7 +42,7 @@ exports.postRegister = async function(req, res, next) {
         msg: "اکانت با موفقیت ساخته شد"
       }
     ])
-    return res.redirect('/auth/login')
+    return redirect(req, res, 201);
   } catch (error) {
     console.error(error)
     error.status = 500;
@@ -66,8 +70,7 @@ exports.getLogin = (req, res, next) => {
 exports.loginPost = async (req, res, next) => {
   try {
     req.session.userId = req.user.id;
-    return res.status(200)
-      .redirect('/');
+    return redirect(req, res, 200, '/')
   } catch (error) {
     console.error(error)
     error.status = 500;
@@ -98,7 +101,7 @@ exports.banPost = function(req, res, next) {
       msg: "userId not found",
       color: 'red'
     }])
-    return res.redirect(req.originalUrl)
+    return redirect(req, res)
   }
 
   user.findOne({ where: { id: +userId } }).then(user => {
@@ -106,7 +109,7 @@ exports.banPost = function(req, res, next) {
       return user
     }
     req.flash('errors', [{ msg: "user not found" }])
-    res.redirect(req.originalUrl);
+    return redirect(req, res, 400)
   }).then(user => {
     user.isBan = true
     return user.save()
@@ -115,6 +118,6 @@ exports.banPost = function(req, res, next) {
       msg: "user ban successfully",
       color: 'green'
     }])
-    res.redirect(req.originalUrl)
+    redirect(req, res, 200)
   })
 }
