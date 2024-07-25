@@ -3,6 +3,8 @@ const fs = require('fs').promises
 const path = require('path');
 const tables = require('../models/tables');
 const compressImg = require('../helper/compressImg');
+const { redirect } = require('../helper/redirect');
+
 
 
 //create product page render
@@ -46,7 +48,7 @@ exports.createProduct = async (req, res, next) => {
       msg: "کالا با موقیت اضافه شد",
       color: 'green'
     }])
-    res.redirect(req.originalUrl);
+    return redirect(req,res)
   } catch (error) {
     error.status = 500;
     next(error)
@@ -58,12 +60,12 @@ exports.deleteProduct = async (req, res, next) => {
     const { productId } = req.params
     if (!productId) {
       req.flash('errors', [{ msg: "درخواست معتبر نیست", color: 'red' }])
-      return res.status(401).redirect(req.originalUrl)
+      return redirect(req,res,401)
     }
     const product = await tables.Product.findOne({ where: { id: +productId }, include: "productImage" })
     if (!product) {
       req.flash('errors', [{ msg: "کالا پیدا نشد", color: 'red' }])
-      return res.json({ msg: "product not found" })
+      return redirect(req,res,400)
     }
     const filenamesToRemove = product.productImage.map(async img => {
       const imgPath = path.join(__dirname, '../public', 'productImages', img.filename);
@@ -76,6 +78,7 @@ exports.deleteProduct = async (req, res, next) => {
       msg: "product removed succesfully",
       color:'green'
     }])
+    return redirect(req,res)
   } catch (error) {
     error.status = 500;
     next(error)

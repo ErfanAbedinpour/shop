@@ -1,10 +1,7 @@
 const { User } = require('../models/tables');
 const { errorMessage, messageRawList } = require('../helper/messageCls');
+const {redirect} = require('../helper/redirect')
 
-function redirect(req, res, status = 200, to = req.originalUrl) {
-  req.session.save()
-  res.status(status);
-  res.redirect(to);
 
 //register page render
 exports.getRegister = (req, res) => {
@@ -16,7 +13,7 @@ exports.getRegister = (req, res) => {
   res.status(200)
     .render('register', contex)
 }
-//post register
+//post registerl
 exports.postRegister = async function(req, res, next) {
   try {
     const { username, password, email } = req.body;
@@ -32,7 +29,7 @@ exports.postRegister = async function(req, res, next) {
         color: 'red',
         msg: "error create user"
       }])
-      return redirect(req, res, 401, 'back');
+      return redirect(req, res, 401,);
     }
     req.flash('success', [
       {
@@ -104,7 +101,6 @@ exports.banPost = async function(req, res, next) {
   if (!user) {
     req.flash('errors', [{ msg: "user not found" }])
     return redirect(req, res, 400)
-<<<<<<< HEAD
   }
   user.isBan = true
   user.save()
@@ -113,18 +109,4 @@ exports.banPost = async function(req, res, next) {
     color: 'green'
   }])
   return redirect(req, res, 200)
-=======
-  }).then(user => {
-    user.isBan = true
-    return user.save()
-  }).then(() => {
-    req.flash('success', [{
-      msg: "user ban successfully",
-      color: 'green'
-    }])
-    redirect(req, res, 200)
-  })
->>>>>>> c670e1fa3946bb1391e8f48a7f335a55f21d9560
 }
-
-exports.redirect = redirect

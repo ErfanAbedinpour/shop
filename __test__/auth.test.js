@@ -1,4 +1,5 @@
 const authController = require('../controller/auth.c');
+const {redirect}  = require('../helper/redirect')
 const tables = require('../models/tables');
 
 
@@ -9,12 +10,9 @@ const mockReq = {
   params:{
     userId:1
   },
-  session:{
-    save:jest.fn()
-  },
   originalUrl:"/",
   session:{
-    save:jest.fn()
+    save:jest.fn(cb=>cb())
   }
 }
 
@@ -109,10 +107,12 @@ describe('login auth controller', function() {
 
 describe('current redirect and session save',function(){
 
-  it('should be throw error when session has an error',function(){
-    authController.redirect(mockReq,mockRes,200,mockReq.originalUrl);
+  it('redirect currently after save session',function(){
+    redirect(mockReq,mockRes,200,mockReq.originalUrl);
     expect(mockReq.session.save).toHaveBeenCalled();
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(mockRes.redirect).toHaveBeenCalledWith(mockReq.originalUrl)
   })
+
+
 })
