@@ -1,15 +1,14 @@
 const { User } = require('../models/tables');
 const { errorMessage, messageRawList } = require('../helper/messageCls');
-const user = require('../models/User');
 
-function redirect(req, res, status = 200, to = null) {
-  to = to || req.originalUrl
-  return req.session.save(() => {
-    res.status(status).redirect(to)
-  })
+
+function redirect(req, res, status = 200, to = req.originalUrl) {
+  req.session.save()
+  res.status(status);
+  res.redirect(to);
 }
 //register page render
-exports.getRegister = (req, res, next) => {
+exports.getRegister = (req, res) => {
   const contex = {
     msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
     title: "ثبت نام",
@@ -44,13 +43,13 @@ exports.postRegister = async function(req, res, next) {
     ])
     return redirect(req, res, 201);
   } catch (error) {
-    console.error(error)
     error.status = 500;
     next(error)
   }
 }
 
 //login page render
+
 exports.getLogin = (req, res, next) => {
   try {
     const contex = {
@@ -61,7 +60,6 @@ exports.getLogin = (req, res, next) => {
     return res.status(200)
       .render('login', contex)
   } catch (error) {
-    console.error(error)
     error.status = 500;
     next(error)
   }
@@ -94,7 +92,7 @@ exports.logOutGet = function(req, res, next) {
 }
 
 //ban user
-exports.banPost = function(req, res, next) {
+exports.banPost = async function(req, res, next) {
   const { userId } = req.params;
   if (!userId) {
     req.flash('errors', [{
@@ -103,21 +101,18 @@ exports.banPost = function(req, res, next) {
     }])
     return redirect(req, res)
   }
-
-  user.findOne({ where: { id: +userId } }).then(user => {
-    if (user) {
-      return user
-    }
+  const user = await User.findOne({ where: { id: +userId } });
+  if (!user) {
     req.flash('errors', [{ msg: "user not found" }])
     return redirect(req, res, 400)
-  }).then(user => {
-    user.isBan = true
-    return user.save()
-  }).then(() => {
-    req.flash('success', [{
-      msg: "user ban successfully",
-      color: 'green'
-    }])
-    redirect(req, res, 200)
-  })
+  }
+  user.isBan = true
+  user.save()
+  req.flash('success', [{
+    msg: "user ban successfully",
+    color: 'green'
+  }])
+  return redirect(req, res, 200)
 }
+
+exports.redirect = redirect

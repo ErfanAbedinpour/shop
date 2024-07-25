@@ -6,13 +6,13 @@ const middlewares = require('./config/midConfig')
 require('dotenv').config({ path: "./.env" });
 const app = express()
 
+
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(middlewares);
-
 
 app.use(async (req, _, next) => {
     let currentUser = null;
@@ -51,6 +51,7 @@ app.use((req, res, next) => {
     error.status = 403;
     next(error)
 })
+
 
 app.use((err, req, res, next) => {
     res.status(err.status ?? 500)
