@@ -6,13 +6,20 @@ const middlewares = require('./config/midConfig')
 require('dotenv').config({ path: "./.env" });
 const app = express()
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c670e1fa3946bb1391e8f48a7f335a55f21d9560
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(middlewares);
+<<<<<<< HEAD
+=======
+
+>>>>>>> c670e1fa3946bb1391e8f48a7f335a55f21d9560
 
 app.use(async (req, _, next) => {
     let currentUser = null;
