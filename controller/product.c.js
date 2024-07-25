@@ -6,22 +6,26 @@ const compressImg = require('../helper/compressImg');
 
 
 //create product page render
-exports.getCreate = (req, res, next) => {
+exports.getCreate = async (req, res, next) => {
   const msgObj = messageRawList(req.flash('success')) ?? errorMessage(req.flash('errors'));
-  tables.Category.findAll().then(category => {
+  try {
+    const category =await  tables.Category.findAll();
     const contex = {
       preLoad: "لطفا کالا خود را اضافه کنید",
       title: "افزودن کالا",
       msgObj,
       category
     }
-    res.render('product-add', contex);
-  });
+    res.render('product-add', contex);  
+  } catch (error) {
+    // error.status = 500;
+    next(error);
+  }
+  
 
 }
 
-// remove product logic
-exports.createPost = async (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
   try {
     const { title, description, price, stockQuantity } = req.body;
     const product = await tables.Product.create({
@@ -44,13 +48,12 @@ exports.createPost = async (req, res, next) => {
     }])
     res.redirect(req.originalUrl);
   } catch (error) {
-    console.error(error)
     error.status = 500;
     next(error)
   }
 }
 //delete product login
-exports.deletePost = async (req, res, next) => {
+exports.deleteProduct = async (req, res, next) => {
   try {
     const { productId } = req.params
     if (!productId) {
@@ -66,12 +69,13 @@ exports.deletePost = async (req, res, next) => {
       const imgPath = path.join(__dirname, '../public', 'productImages', img.filename);
       return fs.unlink(imgPath).then(() => Promise.resolve()).catch(() => Promise.resolve());
     });
-    Promise.all(filenamesToRemove)
-      .then(async () => {
-        await product.destroy()
-        await product.save()
-        res.json({ status: true, msg: "product removed succesfully", product })
-      })
+    await Promise.all(filenamesToRemove)
+    await product.destroy()
+    await product.save()
+    req.flash('success',[{
+      msg: "product removed succesfully",
+      color:'green'
+    }])
   } catch (error) {
     error.status = 500;
     next(error)

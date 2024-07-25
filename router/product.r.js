@@ -20,11 +20,11 @@ let uploader = multer({ storage: multer.memoryStorage() }, {
 
 
 router.route('/add')
-  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, uploaderError(validator.createProductValidator, uploader), productController.createPost)
+  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, uploaderError(validator.createProductValidator, uploader), productController.createProduct)
   .get(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, productController.getCreate)
 
 router
   .route('/delete/:productId')
-  .post(productController.deletePost)
+  .post(productController.deleteProduct)
 
 module.exports = router
