@@ -2,27 +2,36 @@ const session = require("express-session");
 const sequlizeStore = require("connect-session-sequelize")(session.Store)
 const flash = require('connect-flash');
 const logger = require('morgan')
-const { db } = require('../utils/constant')
 const { Router } = require('express')
-const router = Router()
 
 
-const store = new sequlizeStore({
-  db: db,
-})
 
-router.use(
-  session({
-    store: store,
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false
+function dbStore(db){
+  const store = new sequlizeStore({
+    db: db,
   })
-);
+  return store;
+}
 
 
-router.use(flash());
-router.use(logger('dev'))
+function createMiddlewares(db){
+  const router = Router();
+  router.use(
+    session({
+      store: dbStore(db),
+      secret: process.env.SECRET,
+      resave: false,
+      saveUninitialized: false
+    })
+  );
+  
+  router.use(flash());
+  router.use(logger('dev'))
+  return router
+}
 
 
-module.exports = router
+
+
+module.exports = createMiddlewares
+

@@ -1,6 +1,6 @@
 const { User } = require('../models/tables');
 const { errorMessage, messageRawList } = require('../helper/messageCls');
-const {redirect} = require('../helper/redirect')
+const { redirect } = require('../helper/redirect')
 
 
 //register page render
@@ -37,7 +37,7 @@ exports.postRegister = async function(req, res, next) {
         msg: "اکانت با موفقیت ساخته شد"
       }
     ])
-    return redirect(req, res, 201);
+    return redirect(req, res, 201, '/auth/login');
   } catch (error) {
     error.status = 500;
     next(error)
@@ -64,6 +64,7 @@ exports.getLogin = (req, res, next) => {
 exports.loginPost = async (req, res, next) => {
   try {
     req.session.userId = req.user.id;
+    req.session.user = req.user;
     return redirect(req, res, 200, '/')
   } catch (error) {
     console.error(error)

@@ -68,6 +68,7 @@ exports.loginValidator = [
       if (!user || !await bcrypt.compare(req.body.password, user.password)) throw new Error("ایمیل یا پسورد اشباه است")
       if (user.isBan && user.role !== 'admin') throw new Error('شما توسط ادمین بن شده اید لطفا با پشتیبانی پیام بدید')
       delete user.password;
+      req.userId = user.id;
       req.user = user;
       return true
     })
