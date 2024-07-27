@@ -4,7 +4,6 @@ process.env.NODE_ENV = 'test';
 const { db } = require('../utils/constant');
 const { User, Image, Product } = require('../models/tables')
 const fetchDat = require('../helper/initData');
-const { ExpressValidator } = require("express-validator");
 
 let app;
 

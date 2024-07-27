@@ -1,5 +1,5 @@
-const { messageRawList, errorMessage } = require('../helper/messageCls')
-const fs = require('fs').promises
+const { messageRawList, errorMessage } = require('../helper/messageCls');
+const fs = require('fs').promises;
 const path = require('path');
 const tables = require('../models/tables');
 const compressImg = require('../helper/compressImg');
@@ -20,7 +20,7 @@ exports.getCreate = async (req, res, next) => {
     }
     res.render('product-add', contex);
   } catch (error) {
-    // error.status = 500;
+    error.status = 500;
     next(error);
   }
 
@@ -85,6 +85,35 @@ exports.deleteProduct = async (req, res, next) => {
   } catch (error) {
     error.status = 500;
     next(error)
+  }
+}
+
+//get Product by ID
+exports.getProductById = async function(req, res, next) {
+  const { productId } = req.params;
+  if (!productId) {
+    req.flash('errors', [{ msg: "productId does not exsist" }]);
+    res.status(401);
+    return res.redirect('back');
+  }
+
+  try {
+    const product = await tables.Product.findOne({ where: { id: +productId }, include: ['productImage', 'Category'] });
+    if (!product) {
+      req.flash('errors', [{ msg: "porduct does not found" }]);
+      return res.redirect('back');
+    }
+    // const contex = {
+    //   title: `کالای ${product.title}`,
+    //   product,
+    //   image: product.productImage
+    // }
+    res.send({
+      product
+    })
+  } catch (err) {
+    err.status = 500;
+    next(err)
   }
 }
 

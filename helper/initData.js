@@ -2,6 +2,9 @@ const tables = require('../models/tables');
 const table = require('../models/tables');
 
 async function fetchData() {
+  if (tables.Category.count() !== 0) {
+    return console.log('item exsisst')
+  }
   const [man, women] = await table.Type.bulkCreate([
     {
       gender: "man"
@@ -40,7 +43,6 @@ async function fetchData() {
     role: 'admin'
   })
   console.log('all data fetched succesfuuly')
-
 }
 
 module.exports = fetchData

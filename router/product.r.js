@@ -27,4 +27,6 @@ router
   .route('/delete/:productId')
   .post(productController.deleteProduct)
 
+router.route('/:productId')
+  .get(productController.getProductById)
 module.exports = router

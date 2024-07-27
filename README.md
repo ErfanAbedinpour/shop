@@ -15,8 +15,9 @@
 - [x] compress product images and save to file
 - [x] validation product information and image info before create 
 - [x] delete product from admin
-- [ ] write test by jest 
-- [ ] write init Data for insert product in DB
+- [x] write unit test by jest 
+- [x] write e2e test 
+- [x] write init Data for insert product in DB
 - [ ] show product details
 - [ ] show all profile informaion to admin page
 - [ ] edit user profile

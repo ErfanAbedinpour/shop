@@ -38,19 +38,20 @@ function createApp(db) {
 
 
 
-    app.use((req, res, next) => {
-        const error = new Error("متأسفیم، ما نتوانستیم صفحه ای را که در آن جستجو می کردید پیدا کنیم. پیشنهاد می کنیم به صفحه اصلی بازگردید.");
-        error.status = 404;
-        next(error)
-    })
+    // app.use((req, res, next) => {
+    //     // const error = new Error("متأسفیم، ما نتوانستیم صفحه ای را که در آن جستجو می کردید پیدا کنیم. پیشنهاد می کنیم به صفحه اصلی بازگردید.");
+    //     // error.status = 404;
+    //     // next(error)
+    // })
 
 
     app.use((err, req, res, next) => {
-        res.status(err.status ?? 404)
-            .render('error', {
-                msg: err.message,
-                preLoad: "صفحه ارور"
-            })
+        // res.status(err.status ?? 404)
+        //     .render('error', {
+        //         msg: err.message,
+        //         preLoad: "صفحه ارور"
+        //     })
+        throw new Error(err)
     })
 
     return app;
