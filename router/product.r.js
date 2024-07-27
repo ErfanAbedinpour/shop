@@ -26,7 +26,7 @@ router.route('/add')
 
 router
   .route('/delete/:productId')
-  .post(productController.deleteProduct)
+  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, productController.deleteProduct)
 
 router.route('/:productId')
   .get(productController.getProductById)
