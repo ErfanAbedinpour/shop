@@ -2,8 +2,9 @@ const tables = require('../models/tables');
 const table = require('../models/tables');
 
 async function fetchData() {
-  if (tables.Category.count() !== 0) {
-    return console.log('item exsisst')
+  if (await tables.Category.count() >= 1) {
+    console.log('nullam')
+    return null;
   }
   const [man, women] = await table.Type.bulkCreate([
     {

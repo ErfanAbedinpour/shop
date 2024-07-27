@@ -1,16 +1,18 @@
 const request = require("supertest");
+const jsdom = require('jsdom')
+const jQuery = require('jquery')(new jsdom.JSDOM().window);
 const createApp = require('../createApp');
 process.env.NODE_ENV = 'test';
 const { db } = require('../utils/constant');
-const { User, Image, Product } = require('../models/tables')
-const fetchDat = require('../helper/initData');
+const { User, Product } = require('../models/tables')
+const fetchData = require('../helper/initData');
 
 let app;
 
 async function beforeAllFunc() {
     await db.authenticate();
     await db.sync({ force: true });
-    await fetchDat()
+    await fetchData();
     app = createApp(db);
 }
 
@@ -65,40 +67,53 @@ describe('auth user ', function() {
             username: "erfan",
             email: "erfan.wtf",
             password: '12341234',
-            confirmPassword: "12341234"
+            confirmPassword: "12341234",
+            csrf_token: ""
         })
         expect(resp.headers.location).toBe('/auth/register');
     })
 
-    it('/POST /auth/register should be singin', async function() {
-        const resp = await request(app).post('/auth/register').send(body);
-        expect(resp.headers.location).toBe('/auth/login');
-    })
-
-    it('/POST /auth/login should be faild to login', async function() {
-        let resp = await request(app).post('/auth/login').send({ ...body, email: "erfan@gad.com" });
-        expect(resp.headers.location).toBe('/auth/login');
-    })
-
-    it('/POST /auth/login should be login true with user role and must 404 error when user requeat to product add page', async function() {
-        let resp = await request(app).post('/auth/login').send(body);
-        expect(resp.headers.location).toBe('/');
-        const user = await User.findOne({ where: { username: body.username } });
-        expect(user.username).toBe(body.username);
+    it('/POST /auth/register should be register user', async function() {
+        let resp = await request(app).get('/auth/register');
+        let HTML = jQuery(resp.text);
+        const token = HTML.find('input[name=csrf_token]').val()
         const cookie = resp.headers['set-cookie'];
+        resp = await request(app).post('/auth/register').set('Cookie', cookie).send({ ...body, csrf_token: token });
+        expect(resp.headers.location).toBe('/auth/login');
+    })
+    it('/POST /auth/login should be faild to login', async function() {
+        resp = await request(app).post('/auth/login').send({ ...body, email: "erfan@gad.com" });
+        expect(resp.headers.location).toBe('/auth/login');
+    })
+    it('/POST /auth/login should be login true with user role and must 404 error when user request to product add page', async function() {
+        let resp = await request(app).get('/auth/login');
+        let HTML = jQuery(resp.text);
+        const token = HTML.find('input[name=csrf_token]').val()
+        const cookie = resp.headers['set-cookie'];
+        resp = await request(app).post('/auth/login').set('Cookie', cookie).send({ ...body, csrf_token: token });
+        expect(resp.headers.location).toBe('/');
+        const user = await User.findOne({ where: { email: body.email } });
+        expect(user.username).toBe(body.username);
+        expect(user.role).toEqual("user");
         resp = await request(app).get('/product/add').set('Cookie', cookie);
         expect(resp.statusCode).toBe(404);
     })
     it('/POST /product/add Show page and login with admin account and inser one product and after delete it ', async function() {
         //login
-        let resp = await request(app).post('/auth/login').send({
+        let resp = await request(app).get('/auth/login');
+        let HTML = jQuery(resp.text);
+        let token = HTML.find('input[name=csrf_token]').val()
+        const cookie = resp.headers['set-cookie'];
+        resp = await request(app).post('/auth/login').set('Cookie', cookie).send({
             email: "milad.wtf44@gmail.com",
-            password: "12341234"
+            password: "12341234",
+            csrf_token: token
         })
         expect(resp.headers.location).toBe("/");
-        const cookie = resp.headers['set-cookie'];
         //get product page
         resp = await request(app).get('/product/add').set('Cookie', cookie);
+        HTML = jQuery(resp.text);
+        token = HTML.find('input[name=csrf_token]').val()
         expect(resp.statusCode).toBe(200);
         //insert product
         resp = await request(app).post('/product/add').set('Cookie', cookie)
@@ -107,6 +122,7 @@ describe('auth user ', function() {
             .field('price', '120000')
             .field('stockQuantity', '42')
             .field('category', '1')
+            .field('csrf_token', token)
             .attach('title', "/home/erfan/Desktop/images/imge1.jpg")
             .attach('product', "/home/erfan/Desktop/images/title.jpg")
         let product = await Product.findOne({ where: { title: 'testProduct' }, include: ['productImage'] })
@@ -119,6 +135,7 @@ describe('auth user ', function() {
         expect((await product.productImage).length).toStrictEqual(2);
         //delete product
         resp = await request(app).post(`/product/delete/${product.id}`).set('Cookie', cookie)
+        console.log(resp.headers)
         product = await Product.findOne({ where: { id: product.id } });
         expect(product).toBe(null);
     })

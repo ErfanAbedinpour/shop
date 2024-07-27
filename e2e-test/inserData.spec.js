@@ -1,10 +1,12 @@
-const request = require("supertest");
-const createApp = require('../createApp');
 process.env.NODE_ENV = 'dev';
-const { db } = require('../utils/constant');
+const createApp = require('../createApp');
+const jsdom = require('jsdom');
+const jQuery = require('jquery')(new jsdom.JSDOM().window)
 const fetchDat = require('../helper/initData');
-const { Product } = require("../models/tables");
+const request = require("supertest");
 const supertest = require("supertest");
+const { db } = require('../utils/constant');
+const { Product } = require("../models/tables");
 
 let app;
 
@@ -55,37 +57,42 @@ describe('login and insert data and items', function() {
     image2: "/home/erfan/Desktop/images/imge1.jpg"
   }]
   it("login from admin and delete currenct item and new  Items", async function() {
-    let resp = await request(app).post("/auth/login").send(userBody);
+    let resp = await request(app).get('/auth/login');
+    let HTML = jQuery(resp.text);
+    let token = HTML.find('input[name=csrf_token]').val()
     const cookie = resp.headers['set-cookie'];
+    resp = await request(app).post("/auth/login").set('Cookie', cookie).send({ ...userBody, csrf_token: token });
     const deleteTask = []
     const countOfProducts = await Product.count();
     if (countOfProducts >= 1) {
       const products = await Product.findAll();
       for (const p of products) {
-        deleteTask.push(supertest(app).post(`/product/delete/${p.id}`));
+        deleteTask.push(supertest(app).post(`/product/delete/${p.id}`).set('Cookie', cookie));
       }
       await Promise.all(deleteTask);
     }
-    const inserTask = [];
     for (let i = 0; i < products.length; i++) {
-      inserTask.push(inserProduct(request, app, cookie, products[i]))
+      await (inserProduct(request, app, cookie, products[i]))
     }
-    await Promise.all(inserTask)
     expect(await Product.count()).toEqual(3);
   })
 
   afterAll(afterAllFunc)
 })
 
-
 async function inserProduct(request, app, cookie, item) {
+  let resp = await request(app).get('/product/add').set('Cookie', cookie);
+  let HTML = jQuery(resp.text);
+  let token = HTML.find('input[name=csrf_token]').val()
   await (request(app).post("/product/add").set('Cookie', cookie)
     .field('title', item.title)
     .field('description', item.describe)
     .field('category', item.category)
     .field('stockQuantity', item.quantity)
     .field('price', item.price)
+    .field("csrf_token", token)
     .attach('title', item.titleImage)
     .attach('product', item.image)
     .attach('product', item.image2))
+  return true
 }
