@@ -34,7 +34,7 @@
 
 To Run first you sure your node **node>23**
 ```sh
-  git clone https://github.com/ErfanAbedinpour/shopProject.git
+  git clone https://github.com/ErfanAbedinpour/shop.git
 ```
 ```sh
  cd shopProject
