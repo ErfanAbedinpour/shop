@@ -3,18 +3,19 @@ const validator = require('../validator/authValidator');
 const middlewares = require('../middlewares/mid')
 const auth = require('../controller/auth.c')
 const validatorHandler = require('../utils/errorHandler')
+const csrfToken = require('../utils/csrfToken')
 
 
 const router = Router()
 
 
 router.route('/register')
-  .get(middlewares.isNotAuth, auth.getRegister)
-  .post(middlewares.isNotAuth, validator.singUpValidator, validatorHandler('/auth/register'), auth.postRegister)
+  .get(middlewares.isNotAuth, csrfToken.genCsrfToken, auth.getRegister)
+  .post(middlewares.isNotAuth, csrfToken.verifyCsrfToken, validator.singUpValidator, validatorHandler('/auth/register'), auth.postRegister)
 
 router.route('/login')
-  .get(middlewares.isNotAuth, auth.getLogin)
-  .post(middlewares.isNotAuth, validator.loginValidator, validatorHandler('/auth/login'), auth.loginPost)
+  .get(middlewares.isNotAuth, csrfToken.genCsrfToken, auth.getLogin)
+  .post(middlewares.isNotAuth, csrfToken.verifyCsrfToken, validator.loginValidator, validatorHandler('/auth/login'), auth.loginPost)
 
 router.route('/logout')
   .get(middlewares.isAuth, auth.logOutGet)

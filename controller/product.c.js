@@ -16,7 +16,8 @@ exports.getCreate = async (req, res, next) => {
       preLoad: "لطفا کالا خود را اضافه کنید",
       title: "افزودن کالا",
       msgObj,
-      category
+      category,
+      csrf_token: req.session.csrf.token
     }
     res.render('product-add', contex);
   } catch (error) {

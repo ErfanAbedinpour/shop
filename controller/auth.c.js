@@ -8,7 +8,8 @@ exports.getRegister = (req, res) => {
   const contex = {
     msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
     title: "ثبت نام",
-    preLoad: "ساخت حساب جدید"
+    preLoad: "ساخت حساب جدید",
+    csrf_token: req.session.csrf.token
   }
   res.status(200)
     .render('register', contex)
@@ -51,7 +52,8 @@ exports.getLogin = (req, res, next) => {
     const contex = {
       msgObj: errorMessage(req.flash('errors')) ?? messageRawList(req.flash('success')),
       title: "صفحه ورود",
-      preLoad: "وارد حساب خود شوید"
+      preLoad: "وارد حساب خود شوید",
+      csrf_token: req.session.csrf.token
     }
     return res.status(200)
       .render('login', contex)

@@ -4,6 +4,7 @@ const validator = require('../validator/productValidator')
 const middlewares = require('../middlewares/mid');
 const uploaderError = require('../utils/uploaderError')
 const multer = require('multer')
+const csrf = require('../utils/csrfToken')
 
 const router = Router();
 let uploader = multer({ storage: multer.memoryStorage() }, {
@@ -20,8 +21,8 @@ let uploader = multer({ storage: multer.memoryStorage() }, {
 
 
 router.route('/add')
-  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, uploaderError(validator.createProductValidator, uploader), productController.createProduct)
-  .get(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, productController.getCreate)
+  .post(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, uploaderError(validator.createProductValidator, uploader), csrf.verifyCsrfToken, productController.createProduct)
+  .get(middlewares.isAuth, middlewares.auth, middlewares.isAdmin, csrf.genCsrfToken, productController.getCreate)
 
 router
   .route('/delete/:productId')
