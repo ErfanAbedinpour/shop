@@ -19,7 +19,7 @@ exports.getCreate = async (req, res, next) => {
       category,
       csrf_token: req.session.csrf.token
     }
-    res.render('product-add', contex);
+    res.render('product/product-add', contex);
   } catch (error) {
     error.status = 500;
     next(error);
@@ -30,10 +30,11 @@ exports.getCreate = async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const { title, description, price, stockQuantity } = req.body;
+    const { title, shortDescribe, longDescribe, price, stockQuantity } = req.body;
     const product = await tables.Product.create({
       title,
-      describe: description,
+      shortDescribe: shortDescribe,
+      longDescribe: longDescribe,
       price,
       stockQuantity: +stockQuantity,
       CategoryId: req.category
@@ -104,11 +105,10 @@ exports.getProductById = async function(req, res, next) {
       req.flash('errors', [{ msg: "porduct does not found" }]);
       return res.redirect('back');
     }
-    // const contex = {
-    //   title: `کالای ${product.title}`,
-    //   product,
-    //   image: product.productImage
-    // }
+    const contex = {
+      title: `کالای ${product.title}`,
+      product,
+    }
     res.send({
       product
     })

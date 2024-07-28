@@ -12,7 +12,7 @@ exports.getRegister = (req, res) => {
     csrf_token: req.session.csrf.token
   }
   res.status(200)
-    .render('register', contex)
+    .render('auth/register', contex)
 }
 //post registerl
 exports.postRegister = async function(req, res, next) {
@@ -56,7 +56,7 @@ exports.getLogin = (req, res, next) => {
       csrf_token: req.session.csrf.token
     }
     return res.status(200)
-      .render('login', contex)
+      .render('auth/login', contex)
   } catch (error) {
     error.status = 500;
     next(error)

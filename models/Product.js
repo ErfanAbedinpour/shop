@@ -12,9 +12,13 @@ const Product = db.define('Product', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  describe: {
+  shortDescribe: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  longDescribe: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   stockQuantity: {
     type: DataTypes.INTEGER,

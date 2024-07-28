@@ -11,14 +11,22 @@ exports.createProductValidator = [
     .withMessage('حداقل باید ۶ کارکتر باشد تایتل')
     .bail()
   ,
-  body('description')
+  body('shortDescribe')
     .notEmpty()
     .withMessage('لطفا توضیحات محصول را بنویسید')
     .bail()
     .customSanitizer(des => des.trim())
-    .isLength({ min: 8 })
-    .withMessage('توضیحات حداقل باید ۸ کارکتر باشد')
+
+    .isLength({ min: 3 })
+    .withMessage('توضیحات حداقل باید 3 کارکتر باشد')
   ,
+  body('longDescribe')
+    .notEmpty()
+    .withMessage('لطفا توضیحات محصول را بنویسید')
+    .bail()
+    .customSanitizer(des => des.trim())
+    .isLength({ min: 15 })
+    .withMessage('توضیحات حداقل باید 15 کارکتر باشد'),
   body('stockQuantity')
     .notEmpty()
     .withMessage('لطفا موجودی کالا را وارد کنید')

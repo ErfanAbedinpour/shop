@@ -4,7 +4,6 @@ const jsdom = require('jsdom');
 const jQuery = require('jquery')(new jsdom.JSDOM().window)
 const fetchDat = require('../helper/initData');
 const request = require("supertest");
-const supertest = require("supertest");
 const { db } = require('../utils/constant');
 const { Product } = require("../models/tables");
 
@@ -28,34 +27,42 @@ describe('login and insert data and items', function() {
     email: "milad.wtf44@gmail.com",
     password: "12341234"
   }
-  const products = [{
-    price: "1203223",
-    quantity: "42",
-    title: "کفش مردانه",
-    describe: "این یکی از بهتری کفش های مردانه است",
-    category: "1",
-    titleImage: "/home/erfan/Desktop/images/imge1.jpg",
-    image: "/home/erfan/Desktop/images/image3.jpg",
-    image2: "/home/erfan/Desktop/images/newImages.jpeg"
-  }, {
-    price: "120000",
-    quantity: "50",
-    title: "کفش زنانه",
-    describe: "این کفش زنانه بسیاز کفش زیبایی است",
-    category: "2",
-    titleImage: "/home/erfan/Desktop/images/image3.jpg",
-    image: "/home/erfan/Desktop/images/newImages.jpeg",
-    image2: "/home/erfan/Desktop/images/title.jpg"
-  }, {
-    price: "539999",
-    quantity: "100",
-    title: "ساعت رولکس",
-    describe: "این ساعت رولکس بسیار بسیار ساعت خوبی است",
-    category: "3",
-    titleImage: "/home/erfan/Desktop/images/newImages.jpeg",
-    image: "/home/erfan/Desktop/images/image3.jpg",
-    image2: "/home/erfan/Desktop/images/imge1.jpg"
-  }]
+  const products = [
+    {
+      title: "تیشرت مردانه",
+      price: 299000,
+      category: 1,
+      shortDescribe: "تیشرت نخی با کیفیت بالا",
+      longDescribe: "این تیشرت از جنس نخی مرغوب ساخته شده و مناسب برای استفاده روزمره است. دارای دوخت محکم و دوام بالا میباشد.",
+      image: "/home/erfan/Desktop/images/imge1.jpg",
+      image2: "/home/erfan/Desktop/images/image3.jpg",
+      titleImage: "/home/erfan/Desktop/images/title.jpg",
+      quantity: 50
+    },
+    {
+      title: "پیراهن زنانه",
+      price: 499000,
+      category: 2,
+      shortDescribe: "پیراهن زیبا و شیک",
+      longDescribe: "این پیراهن زنانه با طراحی زیبا و رنگهای جذاب، مناسب برای مهمانیها و مجالس میباشد. جنس پارچه آن بسیار نرم و راحت است.",
+      image: "/home/erfan/Desktop/images/image3.jpg",
+      image2: "/home/erfan/Desktop/images/title.jpg",
+      titleImage: "/home/erfan/Desktop/images/imge1.jpg",
+      quantity: 30
+    },
+    {
+      title: "شلوار جین",
+      price: 399000,
+      category: 3,
+      shortDescribe: "شلوار جین با دوام و شیک",
+      longDescribe: "این شلوار جین از بهترین نوع جین ساخته شده و دارای طراحی مدرن و جوان پسند است. مناسب برای استفاده روزمره و مجالس غیررسمی.",
+      image: "/home/erfan/Desktop/images/newImages.jpeg",
+      image2: "/home/erfan/Desktop/images/title.jpg",
+      titleImage: "/home/erfan/Desktop/images/image3.jpg",
+      quantity: 40
+    }
+  ];
+
   it("login from admin and delete currenct item and new  Items", async function() {
     let resp = await request(app).get('/auth/login');
     let HTML = jQuery(resp.text);
@@ -65,9 +72,9 @@ describe('login and insert data and items', function() {
     const deleteTask = []
     const countOfProducts = await Product.count();
     if (countOfProducts >= 1) {
-      const products = await Product.findAll();
-      for (const p of products) {
-        deleteTask.push(supertest(app).post(`/product/delete/${p.id}`).set('Cookie', cookie));
+      const productsInDB = await Product.findAll();
+      for (const p of productsInDB) {
+        deleteTask.push(request(app).post(`/product/delete/${p.id}`).set('Cookie', cookie));
       }
       await Promise.all(deleteTask);
     }
@@ -86,7 +93,8 @@ async function inserProduct(request, app, cookie, item) {
   let token = HTML.find('input[name=csrf_token]').val()
   await (request(app).post("/product/add").set('Cookie', cookie)
     .field('title', item.title)
-    .field('description', item.describe)
+    .field('shortDescribe', item.shortDescribe)
+    .field('longDescribe', item.longDescribe)
     .field('category', item.category)
     .field('stockQuantity', item.quantity)
     .field('price', item.price)
