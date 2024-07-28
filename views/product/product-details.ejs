@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<%- include('../partials/_head.ejs')%>
+
+    <body>
+        <%- include("../partials/_header.ejs")%>
+            <!-- /.Main Header -->
+            <%- include('../partials/_search.ejs')%>
+                <!-- /.mobile-side-menu -->
+                <div id="preloader">
+                    <div class="preloader-close">X</div>
+                    <div class="sk-three-bounce">
+                        <div class="sk-child sk-bounce1"></div>
+                        <div class="sk-child sk-bounce2"></div>
+                        <div class="sk-child sk-bounce3"></div>
+                    </div>
+                </div>
+                <!-- ./ preloader -->
+
+                <%- include('../partials/_preload.ejs')%>
+                    <!-- ./ page-header -->
+                    <section class="shop-section single pt-100 pb-100">
+                        <div class="container rtl">
+                            <div class="row">
+                                <div class="col-lg-6 product-details-wrap">
+                                    <div class="product-slider-wrap">
+                                        <div class="swiper product-gallary-thumb">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide">
+                                                    <div class="thumb-item">
+                                                        <img src="/img/shop/shop-thumb-1.png" alt="shop">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="thumb-item">
+                                                        <img src="/img/shop/shop-thumb-2.png" alt="shop">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="thumb-item">
+                                                        <img src="/img/shop/shop-thumb-3.png" alt="shop">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper product-gallary">
+                                            <span class="sale">فروش</span>
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide">
+                                                    <div class="gallary-item">
+                                                        <img src="/img/shop/shop-slider-1.jpg" alt="shop">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="gallary-item">
+                                                        <img src="/img/shop/shop-slider-2.jpg" alt="shop">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="gallary-item">
+                                                        <img src="/img/shop/shop-slider-3.jpg" alt="shop">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-nav-next"><i class="las la-arrow-right"></i></div>
+                                            <div class="swiper-nav-prev"><i class="las la-arrow-left"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="product-details">
+                                        <div class="product-info">
+                                            <div class="product-inner">
+                                                <span class="category">
+                                                    <%= product.Category.name%>
+                                                </span>
+                                                <h3 class="title">
+                                                    <%= product.title%>
+                                                </h3>
+                                                <div class="rating-wrap">
+                                                    <ul class="rating">
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                    </ul>
+                                                    <span>(1 نظر مشتریان)</span>
+                                                </div>
+                                                <!-- <span>360 تومان</span> //for decount of product -->
+                                                <h4 class="price">
+                                                    <%= product.price%> تومان
+                                                </h4>
+                                                <div class="product-desc-wrap">
+                                                    <p class="desc">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+                                                        صنعت
+                                                        چاپ<br> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
+                                                        چاپ
+                                                    </p>
+                                                    <span class="view-text"><i class="fa-sharp fa-regular fa-eye"></i>28
+                                                        نفر
+                                                        در
+                                                        حال مشاهده این هستند</span>
+                                                </div>
+                                                <div class="item-left-line">
+                                                    <span>فقط 15 کالا در انبار باقی مانده است!</span>
+                                                    <div class="line"></div>
+                                                </div>
+                                                <ul class="details-list">
+                                                    <li><i class="fa-light fa-arrow-right-arrow-left"></i>گارانتی بازگشت
+                                                    </li>
+                                                    <li><i class="fa-light fa-truck"></i>ارسال رایگان محصول </li>
+                                                    <li><i class="fa-light fa-circle-check"></i>کلیه مالیات ها و عوارض
+                                                        گمرکی
+                                                        شامل می شود</li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-btn">
+                                                <form>
+                                                    <input type="number" name="age" id="age" min="1" max="100" step="1"
+                                                        value="1">
+                                                </form>
+                                                <div class="cart-btn-wrap-2"><a href="#"
+                                                        class="rr-primary-btn cart-btn">افزودن
+                                                        به سبد خرید</a></div>
+                                            </div>
+                                            <a href="#" class="shop-details-btn rr-primary-btn">اکنون مورد را بخرید</a>
+                                            <ul class="product-meta">
+                                                <li><a href="#">مقایسه کنید</a></li>
+                                                <li><a href="#">سوال بپرس</a></li>
+                                                <li><a href="#">اشتراک گذاری</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Shop Section-->
+
+                    <section class="product-description pb-100">
+                        <div class="container rtl">
+                            <ul class="nav tab-navigation" id="product-tab-navigation" role="tablist">
+                                <li role="presentation">
+                                    <button class="active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                        type="button" role="tab" aria-controls="home"
+                                        aria-selected="true">توضیحات</button>
+                                </li>
+                                <li role="presentation">
+                                    <button id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                        type="button" role="tab" aria-controls="profile" aria-selected="false">اطلاعات
+                                        تکمیلی</button>
+                                </li>
+                                <li role="presentation">
+                                    <button id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                        type="button" role="tab" aria-controls="contact" aria-selected="false">نظرات
+                                        (3)</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="product-tab-content">
+                                <div class="tab-pane fade show active description" id="home" role="tabpanel"
+                                    aria-labelledby="home-tab">
+                                    <div class="desc-wrap">
+                                        <div class="left-content">
+                                            <p class="mb-30">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                با
+                                                استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون
+                                                و
+                                                سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
+                                                متنوع
+                                                با
+                                                هدف بهبود ابزارهای کاربردی می باشد</p>
+                                            <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
+                                                با
+                                                استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون
+                                                و
+                                                سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
+                                                متنوع
+                                                با
+                                                هدف بهبود ابزارهای کاربردی می باشد</p>
+                                        </div>
+                                        <div class="right-content">
+                                            <img src="/img/shop/shop-details-img.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <table class="table product-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Size</th>
+                                                <th scope="col">Bust</th>
+                                                <th scope="col">Waist</th>
+                                                <th scope="col">Hip</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>S</td>
+                                                <td>34 -36</td>
+                                                <td>28-30</td>
+                                                <td>38-40</td>
+                                            </tr>
+                                            <tr>
+                                                <td>M</td>
+                                                <td>36 -38</td>
+                                                <td>30-32.5</td>
+                                                <td>40-43</td>
+                                            </tr>
+                                            <tr>
+                                                <td>L</td>
+                                                <td>38-40</td>
+                                                <td>32-34.5</td>
+                                                <td>42-45.5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>XL</td>
+                                                <td>40-42</td>
+                                                <td>35-37</td>
+                                                <td>46-38</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade review" id="contact" role="tabpanel"
+                                    aria-labelledby="contact-tab">
+                                    <div class="row product-review gy-lg-0 gy-4">
+                                        <div class="col-lg-5 col-md-12">
+                                            <div class="reviewr-wrap">
+                                                <div class="review-list">
+                                                    <div class="review-item">
+                                                        <div class="review-thumb">
+                                                            <img src="/img/shop/review-list-1.jpg" alt="img">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="content-top">
+                                                                <h4 class="name">Eleanor Fant <span>06 March,
+                                                                        2023</span>
+                                                                </h4>
+                                                                <ul class="review">
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                            <p>Designed very similarly to the nearly double priced
+                                                                Galaxy
+                                                                tab
+                                                                S6, with the only removal being.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-item">
+                                                        <div class="review-thumb">
+                                                            <img src="/img/shop/review-list-2.jpg" alt="img">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="content-top">
+                                                                <h4 class="name">Haliey White <span>06 March,
+                                                                        2023</span>
+                                                                </h4>
+                                                                <ul class="review">
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                    <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                            <p>Designed very similarly to the nearly double priced
+                                                                Galaxy
+                                                                tab
+                                                                S6, with the only removal being.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-12">
+                                            <div class="review-form-wrap">
+                                                <h4 class="title">Review this product</h4>
+                                                <span class="publish">Your email address will not be published. Required
+                                                    fields
+                                                    are marked *</span>
+                                                <div class="review-box">
+                                                    <span>Your ratings :</span>
+                                                    <ul class="review">
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="blog-contact-form form-2 review-form">
+                                                    <div class="request-form">
+                                                        <form action="https://html.rrdevs.net/roiser/contact.php"
+                                                            method="post" id="ajax_contact" class="form-horizontal">
+                                                            <div class="form-group row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-item">
+                                                                        <input type="text" id="fullname" name="fullname"
+                                                                            class="form-control"
+                                                                            placeholder="Your Name">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-item">
+                                                                        <input type="text" id="email" name="email"
+                                                                            class="form-control"
+                                                                            placeholder="Your Email">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-item message-item">
+                                                                        <textarea id="message" name="message" cols="30"
+                                                                            rows="5" class="form-control address"
+                                                                            placeholder="Comment"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="checkbox-wrap">
+                                                                <input type="checkbox" id="vehicle3" name="vehicle3"
+                                                                    value="Boat">
+                                                                <label for="vehicle3">Save my name, email, and website
+                                                                    in
+                                                                    this
+                                                                    browser for the next time I comment.</label><br>
+                                                            </div>
+                                                            <div class="submit-btn">
+                                                                <button id="submit" class="rr-primary-btn"
+                                                                    type="submit">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--Product Description-->
+
+                    <footer class="footer-section bg-grey pt-60">
+                        <div class="container rtl">
+                            <div class="footer-items">
+                                <div class="footer-item">
+                                    <div class="icon">
+                                        <img src="/img/icon/footer-1.png" alt="icon">
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">ارسال رایگان</h4>
+                                        <span>سفارش بالای 65 تومان</span>
+                                    </div>
+                                </div>
+                                <div class="footer-item">
+                                    <div class="icon">
+                                        <img src="/img/icon/footer-2.png" alt="icon">
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">بازگشت رایگان</h4>
+                                        <span>سیاست بازگشت رایگان 30 روزه</span>
+                                    </div>
+                                </div>
+                                <div class="footer-item">
+                                    <div class="icon">
+                                        <img src="/img/icon/footer-3.png" alt="icon">
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">پرداخت های امن</h4>
+                                        <span>تمام کارت ها</span>
+                                    </div>
+                                </div>
+                                <div class="footer-item item-2">
+                                    <div class="icon">
+                                        <img src="/img/icon/footer-4.png" alt="icon">
+                                    </div>
+                                    <div class="content">
+                                        <h4 class="title">خدمات مشتری</h4>
+                                        <span>خدمات مشتری درجه یک</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row footer-widget-wrap pb-60">
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="footer-widget">
+                                        <div class="widget-header">
+                                            <h3 class="widget-title">درباره فروشگاه</h3>
+                                        </div>
+                                        <div class="footer-contact">
+                                            <div class="icon"><i class="fa-sharp fa-solid fa-phone-rotary"></i></div>
+                                            <div class="content">
+                                                <span>سوالی دارید؟ 24/7 با ما تماس بگیرید</span>
+                                                <a href="tel:+989127661646">+989127661646</a>
+                                            </div>
+                                        </div>
+                                        <ul class="schedule-list">
+                                            <li><span>دوشنبه تا جمعه:</span>8:00 صبح تا 6:00 بعد از ظهر</li>
+                                            <li><span>شنبه:</span>8:00 صبح تا 6:00 بعد از ظهر</li>
+                                            <li><span>یکشنبه:</span> سرویس بسته</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="footer-widget">
+                                        <div class="widget-header">
+                                            <h3 class="widget-title">فروشگاه های ما</h3>
+                                        </div>
+                                        <ul class="footer-list">
+                                            <li><a href="contact.html">نیویورک</a></li>
+                                            <li><a href="contact.html">لوس آنجلس</a></li>
+                                            <li><a href="contact.html">شیکاکو</a></li>
+                                            <li><a href="contact.html">لاس وگاس</a></li>
+                                            <li><a href="contact.html">واشینگتن</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="footer-widget">
+                                        <div class="widget-header">
+                                            <h3 class="widget-title">دسته بندی های فروشگاه</h3>
+                                        </div>
+                                        <ul class="footer-list">
+                                            <li><a href="shop-grid.html">تازه رسیده ها</a></li>
+                                            <li><a href="shop-grid.html">پرفروش ترین</a></li>
+                                            <li><a href="shop-grid.html">سبزیجات</a></li>
+                                            <li><a href="shop-grid.html">گوشت تازه</a></li>
+                                            <li><a href="shop-grid.html">غذای دریایی تازه</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-6">
+                                    <div class="footer-widget">
+                                        <div class="widget-header">
+                                            <h3 class="widget-title">لینک های مفید</h3>
+                                        </div>
+                                        <ul class="footer-list">
+                                            <li><a href="contact.html">سیاست حفظ حریم خصوصی</a></li>
+                                            <li><a href="contact.html">شرایط و ضوابط</a></li>
+                                            <li><a href="contact.html">با ما تماس بگیرید</a></li>
+                                            <li><a href="blog-grid.html">آخرین خبرها</a></li>
+                                            <li><a href="contact.html">نقشه های سایت ما</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="footer-widget">
+                                        <div class="widget-header">
+                                            <h3 class="widget-title">خبرنامه ما</h3>
+                                        </div>
+                                        <div class="news-form-wrap">
+                                            <p class="mb-20">برای دریافت به‌روزرسانی‌ها از جمله ورودی‌های جدید و سایر
+                                                تخفیف‌ها،
+                                                در فهرست پستی مشترک شوید</p>
+                                            <div class="footer-form mb-20">
+                                                <form action="#" class="rr-subscribe-form">
+                                                    <input class="form-control" type="email" name="email"
+                                                        placeholder="آدرس ایمیل">
+                                                    <input type="hidden" name="action" value="mailchimpsubscribe">
+                                                    <button class="submit">عضویت</button>
+                                                    <div class="clearfix"></div>
+                                                </form>
+                                            </div>
+                                            <p class="mb-0">من می خواهم اخبار و پیشنهاد ویژه را دریافت کنم</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="copyright-area">
+                            <div class="container">
+                                <div class="row copyright-content">
+                                    <div class="col-lg-6">
+                                        <div class="footer-img-wrap">
+                                            <span>سیستم پرداخت:</span>
+                                            <div class="footer-img"><a href="#"><img src="/img/images/footer-img-1.png"
+                                                        alt="img"></a></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p>تمامی حقوق محفوظ <span>میباشد</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- ./ footer-section -->
+
+                    <div id="scroll-percentage"><span id="scroll-percentage-value"></span></div>
+                    <!--scrollup-->
+
+                    <!-- JS here -->
+                    <script src="/js/vendor/jquary-3.6.0.min.js"></script>
+                    <script src="/js/vendor/bootstrap-bundle.js"></script>
+                    <script src="/js/vendor/imagesloaded-pkgd.js"></script>
+                    <script src="/js/vendor/waypoints.min.js"></script>
+                    <script src="/js/vendor/venobox.min.js"></script>
+                    <script src="/js/vendor/odometer.min.js"></script>
+                    <script src="/js/vendor/meanmenu.js"></script>
+                    <script src="/js/vendor/smooth-scroll.js"></script>
+                    <script src="/js/vendor/jquery.isotope.js"></script>
+                    <script src="/js/vendor/wow.min.js"></script>
+                    <script src="/js/vendor/swiper.min.js"></script>
+                    <script src="/js/vendor/split-type.min.js"></script>
+                    <script src="/js/vendor/gsap.min.js"></script>
+                    <script src="/js/vendor/scroll-trigger.min.js"></script>
+                    <script src="/js/vendor/nice-select.js"></script>
+                    <script src="/js/ajax-form.js"></script>
+                    <script src="/js/contact.js"></script>
+                    <script src="/js/main.js"></script>
+    </body>
+
+    <!-- Mirrored from html.rrdevs.net/roiser/shop-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jun 2024 22:44:13 GMT -->
+
+    <!-- Mirrored from clinicafraa.ir/roiser/shop-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jun 2024 17:24:53 GMT -->
+
+</html>

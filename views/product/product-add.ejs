@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<%- include('./partials/_head.ejs',title)%>
+<%- include('../partials/_head.ejs',title)%>
 
     <body>
         <!-- header-area-start -->
-        <%- include('./partials/_header.ejs')%>
-            <%- include('./partials/_search.ejs')%>
+        <%- include('../partials/_header.ejs')%>
+            <%- include('../partials/_search.ejs')%>
                 <div id="preloader">
                     <div class="preloader-close">X</div>
                     <div class="sk-three-bounce">
@@ -16,12 +16,12 @@
                     </div>
                 </div>
                 <!-- ./ preloader -->
-                <%- include('./partials/_preload.ejs')%>
+                <%- include('../partials/_preload.ejs')%>
                     <!-- ./ page-header -->
                     <section class="login-area pt-100 pb-100">
                         <div class="container">
                             <div class="login-wrap text-center">
-                                <%- include("./partials/_messages.ejs",msgObj)%>
+                                <%- include("../partials/_messages.ejs",msgObj)%>
                                     <h3 class="title">اطلاعات کالا خود را وارد کنید</h3>
                                     <span class="or-text">یا</span>
                                     <form action="/product/add" class="login-form" method="post"
@@ -103,8 +103,8 @@
                     </section>
 
                     </script>
-                    <%- include('./partials/_footer.ejs')%>
-                        <%- include('./partials/_foot.ejs')%>
+                    <%- include('../partials/_footer.ejs')%>
+                        <%- include('../partials/_foot.ejs')%>
     </body>
 
 </html>

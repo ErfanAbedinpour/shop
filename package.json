@@ -5,6 +5,7 @@
   "scripts": {
     "test:unit": "jest --testPathPattern=unit-test",
     "test": "jest --testPathPattern=e2e-test",
+    "insert":"jest e2e-test/inserData.spec.js",
     "run": "nodemon app.js"
   },
   "keywords": [],

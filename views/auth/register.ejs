@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<%- include('../partials/_head.ejs',title)%>
+
+    <body>
+        <!-- header-area-start -->
+        <%- include('../partials/_header.ejs')%>
+            <!-- /#popup-search-box -->
+            <%- include('../partials/_search.ejs')%>
+                <!-- /.mobile-side-menu -->
+                <div id="preloader">
+                    <div class="preloader-close">X</div>
+                    <div class="sk-three-bounce">
+                        <div class="sk-child sk-bounce1"></div>
+                        <div class="sk-child sk-bounce2"></div>
+                        <div class="sk-child sk-bounce3"></div>
+                    </div>
+                </div>
+                <!-- ./ preloader -->
+                <%- include('../partials/_preload.ejs')%>
+                    <!-- ./ page-header -->
+                    <hr>
+                    <%- include('../partials/_authForm.ejs')%>
+                        <%- include('../partials/_footer.ejs')%>
+                            <!-- ./ footer-section -->
+                            <div id="scroll-percentage"><span id="scroll-percentage-value"></span></div>
+                            <!--scrollup-->
+                            <%- include('../partials/_foot.ejs')%>
+    </body>
+
+
+</html>
