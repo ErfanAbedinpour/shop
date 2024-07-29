@@ -18,7 +18,8 @@
 - [x] write unit test by jest 
 - [x] write e2e test 
 - [x] write init Data for insert product in DB
-- [ ] show product details
+- [x] show product details
+- [x] forget and reset password
 - [ ] show all profile informaion to admin page
 - [ ] edit user profile
 - [ ] show all user to admin
