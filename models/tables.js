@@ -1,4 +1,5 @@
 const Cart = require('./Cart');
+const resetPassword = require('./resetPassowrd')
 const Category = require('./Category');
 const Comment = require('./Comment');
 const Factor = require('./Factor');
@@ -16,6 +17,8 @@ Cart.belongsTo(User)
 User.hasOne(Cart)
 Category.hasOne(Product);
 Product.belongsTo(Category);
+resetPassword.belongsTo(User)
+User.hasOne(resetPassword)
 //1:m
 Product.hasMany(image, { as: "productImage", onDelete: "CASCADE" });
 image.belongsTo(Product)
@@ -73,5 +76,6 @@ module.exports = {
   ProductCart,
   Type,
   Attribute: attr,
-  Image: image
+  Image: image,
+  resetPassword
 }
