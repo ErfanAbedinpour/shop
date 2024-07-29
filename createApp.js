@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const middlewares = require('./config/midConfig')
+const tables = require('./models/tables')
 require('dotenv').config({ path: "./.env" });
 
 
@@ -16,14 +17,18 @@ function createApp(db) {
     app.use(middlewares(db));
 
     app.use((req, _, next) => {
-        const isAuth = req.session.user || false
-        const localPaylaod = {
-            isAuth,
-            path: req.path,
-            currentUser: req.session.user
-        }
-        app.locals = localPaylaod;
-        next()
+        tables.Category.findAll({ attributes: ['name', 'slug'] }).then(category => {
+            const isAuth = req.session.user || false
+            const localPaylaod = {
+                isAuth,
+                path: req.path,
+                currentUser: req.session.user,
+                category: category
+            }
+            app.locals = localPaylaod;
+            next()
+
+        })
     })
 
     //home route

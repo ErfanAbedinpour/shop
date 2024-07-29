@@ -24,8 +24,6 @@ exports.getCreate = async (req, res, next) => {
     error.status = 500;
     next(error);
   }
-
-
 }
 
 exports.createProduct = async (req, res, next) => {
@@ -98,7 +96,6 @@ exports.getProductById = async function(req, res, next) {
     res.status(401);
     return res.redirect('back');
   }
-
   try {
     const product = await tables.Product.findOne({ where: { id: +productId }, include: ['productImage', 'Category'] });
     if (!product) {
@@ -108,10 +105,10 @@ exports.getProductById = async function(req, res, next) {
     const contex = {
       title: `کالای ${product.title}`,
       product,
+      preLoad: "جزیبات محصول"
     }
-    res.send({
-      product
-    })
+    console.log(product.productImage)
+    res.render("product/product-details", contex)
   } catch (err) {
     err.status = 500;
     next(err)

@@ -12,7 +12,7 @@ let app;
 async function beforeAllFunc() {
   app = createApp(db);
   await db.authenticate();
-  await db.sync()
+  await db.sync({ force: true })
   await fetchDat()
 }
 

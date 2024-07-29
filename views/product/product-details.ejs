@@ -27,41 +27,25 @@
                                     <div class="product-slider-wrap">
                                         <div class="swiper product-gallary-thumb">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="thumb-item">
-                                                        <img src="/img/shop/shop-thumb-1.png" alt="shop">
+                                                <%product.productImage.forEach(img=>{%>
+                                                    <div class="swiper-slide">
+                                                        <div class="thumb-item">
+                                                            <img src="/productImages/<%=img.filename%>" alt="shop">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="thumb-item">
-                                                        <img src="/img/shop/shop-thumb-2.png" alt="shop">
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="thumb-item">
-                                                        <img src="/img/shop/shop-thumb-3.png" alt="shop">
-                                                    </div>
-                                                </div>
+                                                    <%})%>
                                             </div>
                                         </div>
                                         <div class="swiper product-gallary">
                                             <span class="sale">فروش</span>
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="gallary-item">
-                                                        <img src="/img/shop/shop-slider-1.jpg" alt="shop">
+                                                <%product.productImage.forEach(img=>{%>
+                                                    <div class="swiper-slide">
+                                                        <div class="gallary-item">
+                                                            <img src="/productImages/<%=img.filename%>" alt="shop">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="gallary-item">
-                                                        <img src="/img/shop/shop-slider-2.jpg" alt="shop">
-                                                    </div>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                    <div class="gallary-item">
-                                                        <img src="/img/shop/shop-slider-3.jpg" alt="shop">
-                                                    </div>
-                                                </div>
+                                                    <%})%>
                                             </div>
                                             <div class="swiper-nav-next"><i class="las la-arrow-right"></i></div>
                                             <div class="swiper-nav-prev"><i class="las la-arrow-left"></i></div>
@@ -93,10 +77,8 @@
                                                     <%= product.price%> تومان
                                                 </h4>
                                                 <div class="product-desc-wrap">
-                                                    <p class="desc">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-                                                        صنعت
-                                                        چاپ<br> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                                        چاپ
+                                                    <p class="desc">
+                                                        <%= product.shortDescribe%>
                                                     </p>
                                                     <span class="view-text"><i class="fa-sharp fa-regular fa-eye"></i>28
                                                         نفر
@@ -104,7 +86,10 @@
                                                         حال مشاهده این هستند</span>
                                                 </div>
                                                 <div class="item-left-line">
-                                                    <span>فقط 15 کالا در انبار باقی مانده است!</span>
+                                                    <span>
+                                                        <%= product.stockQuantity%>
+                                                            در انبار باقی مانده
+                                                    </span>
                                                     <div class="line"></div>
                                                 </div>
                                                 <ul class="details-list">
@@ -163,22 +148,7 @@
                                     aria-labelledby="home-tab">
                                     <div class="desc-wrap">
                                         <div class="left-content">
-                                            <p class="mb-30">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                                                با
-                                                استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون
-                                                و
-                                                سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
-                                                متنوع
-                                                با
-                                                هدف بهبود ابزارهای کاربردی می باشد</p>
-                                            <p class="mb-0">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و
-                                                با
-                                                استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون
-                                                و
-                                                سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای
-                                                متنوع
-                                                با
-                                                هدف بهبود ابزارهای کاربردی می باشد</p>
+                                            <%= product.longDescribe%>
                                         </div>
                                         <div class="right-content">
                                             <img src="/img/shop/shop-details-img.jpg" alt="">
@@ -347,177 +317,11 @@
                     </section>
                     <!--Product Description-->
 
-                    <footer class="footer-section bg-grey pt-60">
-                        <div class="container rtl">
-                            <div class="footer-items">
-                                <div class="footer-item">
-                                    <div class="icon">
-                                        <img src="/img/icon/footer-1.png" alt="icon">
-                                    </div>
-                                    <div class="content">
-                                        <h4 class="title">ارسال رایگان</h4>
-                                        <span>سفارش بالای 65 تومان</span>
-                                    </div>
-                                </div>
-                                <div class="footer-item">
-                                    <div class="icon">
-                                        <img src="/img/icon/footer-2.png" alt="icon">
-                                    </div>
-                                    <div class="content">
-                                        <h4 class="title">بازگشت رایگان</h4>
-                                        <span>سیاست بازگشت رایگان 30 روزه</span>
-                                    </div>
-                                </div>
-                                <div class="footer-item">
-                                    <div class="icon">
-                                        <img src="/img/icon/footer-3.png" alt="icon">
-                                    </div>
-                                    <div class="content">
-                                        <h4 class="title">پرداخت های امن</h4>
-                                        <span>تمام کارت ها</span>
-                                    </div>
-                                </div>
-                                <div class="footer-item item-2">
-                                    <div class="icon">
-                                        <img src="/img/icon/footer-4.png" alt="icon">
-                                    </div>
-                                    <div class="content">
-                                        <h4 class="title">خدمات مشتری</h4>
-                                        <span>خدمات مشتری درجه یک</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row footer-widget-wrap pb-60">
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="footer-widget">
-                                        <div class="widget-header">
-                                            <h3 class="widget-title">درباره فروشگاه</h3>
-                                        </div>
-                                        <div class="footer-contact">
-                                            <div class="icon"><i class="fa-sharp fa-solid fa-phone-rotary"></i></div>
-                                            <div class="content">
-                                                <span>سوالی دارید؟ 24/7 با ما تماس بگیرید</span>
-                                                <a href="tel:+989127661646">+989127661646</a>
-                                            </div>
-                                        </div>
-                                        <ul class="schedule-list">
-                                            <li><span>دوشنبه تا جمعه:</span>8:00 صبح تا 6:00 بعد از ظهر</li>
-                                            <li><span>شنبه:</span>8:00 صبح تا 6:00 بعد از ظهر</li>
-                                            <li><span>یکشنبه:</span> سرویس بسته</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="footer-widget">
-                                        <div class="widget-header">
-                                            <h3 class="widget-title">فروشگاه های ما</h3>
-                                        </div>
-                                        <ul class="footer-list">
-                                            <li><a href="contact.html">نیویورک</a></li>
-                                            <li><a href="contact.html">لوس آنجلس</a></li>
-                                            <li><a href="contact.html">شیکاکو</a></li>
-                                            <li><a href="contact.html">لاس وگاس</a></li>
-                                            <li><a href="contact.html">واشینگتن</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="footer-widget">
-                                        <div class="widget-header">
-                                            <h3 class="widget-title">دسته بندی های فروشگاه</h3>
-                                        </div>
-                                        <ul class="footer-list">
-                                            <li><a href="shop-grid.html">تازه رسیده ها</a></li>
-                                            <li><a href="shop-grid.html">پرفروش ترین</a></li>
-                                            <li><a href="shop-grid.html">سبزیجات</a></li>
-                                            <li><a href="shop-grid.html">گوشت تازه</a></li>
-                                            <li><a href="shop-grid.html">غذای دریایی تازه</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-md-6">
-                                    <div class="footer-widget">
-                                        <div class="widget-header">
-                                            <h3 class="widget-title">لینک های مفید</h3>
-                                        </div>
-                                        <ul class="footer-list">
-                                            <li><a href="contact.html">سیاست حفظ حریم خصوصی</a></li>
-                                            <li><a href="contact.html">شرایط و ضوابط</a></li>
-                                            <li><a href="contact.html">با ما تماس بگیرید</a></li>
-                                            <li><a href="blog-grid.html">آخرین خبرها</a></li>
-                                            <li><a href="contact.html">نقشه های سایت ما</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="footer-widget">
-                                        <div class="widget-header">
-                                            <h3 class="widget-title">خبرنامه ما</h3>
-                                        </div>
-                                        <div class="news-form-wrap">
-                                            <p class="mb-20">برای دریافت به‌روزرسانی‌ها از جمله ورودی‌های جدید و سایر
-                                                تخفیف‌ها،
-                                                در فهرست پستی مشترک شوید</p>
-                                            <div class="footer-form mb-20">
-                                                <form action="#" class="rr-subscribe-form">
-                                                    <input class="form-control" type="email" name="email"
-                                                        placeholder="آدرس ایمیل">
-                                                    <input type="hidden" name="action" value="mailchimpsubscribe">
-                                                    <button class="submit">عضویت</button>
-                                                    <div class="clearfix"></div>
-                                                </form>
-                                            </div>
-                                            <p class="mb-0">من می خواهم اخبار و پیشنهاد ویژه را دریافت کنم</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="copyright-area">
-                            <div class="container">
-                                <div class="row copyright-content">
-                                    <div class="col-lg-6">
-                                        <div class="footer-img-wrap">
-                                            <span>سیستم پرداخت:</span>
-                                            <div class="footer-img"><a href="#"><img src="/img/images/footer-img-1.png"
-                                                        alt="img"></a></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <p>تمامی حقوق محفوظ <span>میباشد</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- ./ footer-section -->
+                    <%- include('../partials/_footer.ejs')%>
+                        <!--scrollup-->
 
-                    <div id="scroll-percentage"><span id="scroll-percentage-value"></span></div>
-                    <!--scrollup-->
-
-                    <!-- JS here -->
-                    <script src="/js/vendor/jquary-3.6.0.min.js"></script>
-                    <script src="/js/vendor/bootstrap-bundle.js"></script>
-                    <script src="/js/vendor/imagesloaded-pkgd.js"></script>
-                    <script src="/js/vendor/waypoints.min.js"></script>
-                    <script src="/js/vendor/venobox.min.js"></script>
-                    <script src="/js/vendor/odometer.min.js"></script>
-                    <script src="/js/vendor/meanmenu.js"></script>
-                    <script src="/js/vendor/smooth-scroll.js"></script>
-                    <script src="/js/vendor/jquery.isotope.js"></script>
-                    <script src="/js/vendor/wow.min.js"></script>
-                    <script src="/js/vendor/swiper.min.js"></script>
-                    <script src="/js/vendor/split-type.min.js"></script>
-                    <script src="/js/vendor/gsap.min.js"></script>
-                    <script src="/js/vendor/scroll-trigger.min.js"></script>
-                    <script src="/js/vendor/nice-select.js"></script>
-                    <script src="/js/ajax-form.js"></script>
-                    <script src="/js/contact.js"></script>
-                    <script src="/js/main.js"></script>
+                        <!-- JS here -->
+                        <%- include('../partials/_foot.ejs')%>
     </body>
-
-    <!-- Mirrored from html.rrdevs.net/roiser/shop-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Jun 2024 22:44:13 GMT -->
-
-    <!-- Mirrored from clinicafraa.ir/roiser/shop-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jun 2024 17:24:53 GMT -->
 
 </html>
