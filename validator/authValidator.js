@@ -7,7 +7,7 @@ exports.singUpValidator = [
     .notEmpty()
     .withMessage('نام کاربری اجباری است')
     .bail()
-    .isLength({ min: "4" })
+    .isLength({ min: 4 })
     .withMessage('نام کاربری باید حداقل ۴ کاراکتر داشته باشد')
     .bail(),
   body('role')
@@ -39,7 +39,7 @@ exports.singUpValidator = [
     .notEmpty()
     .withMessage('پسورد اجباری است')
     .bail()
-    .isLength({ min: "6" })
+    .isLength({ min: 6 })
     .withMessage('پسورد باید حداقل ۶ کاراکتر داشته باشد')
     .bail()
     .custom((pass, { req }) => {
@@ -72,4 +72,21 @@ exports.loginValidator = [
       req.user = user;
       return true
     })
+]
+
+
+exports.forGetPasswordValidator = [
+  body("password")
+    .notEmpty()
+    .withMessage('لطفا پسورد را وارد کنید')
+    .bail()
+    .isLength({ min: 6 })
+    .withMessage('پسورد باید حداقل ۶ کاکتر باشد')
+    .bail()
+    .custom((pass, { req }) => {
+      if (pass !== req.body.confirmPassword) {
+        throw new Error('پسورد ها همخونی ندارند')
+      }
+      return true
+    }),
 ]

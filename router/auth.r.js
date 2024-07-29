@@ -21,4 +21,13 @@ router.route('/logout')
   .get(middlewares.isAuth, auth.logOutGet)
 
 router.route('/ban/:userId', middlewares.isAuth, middlewares.auth, middlewares.isAdmin, auth.banPost);
+
+
+router.route('/reset')
+  .get(csrfToken.genCsrfToken, auth.getReset)
+  .post(csrfToken.verifyCsrfToken, auth.postReset)
+
+router.route('/forgetPassword')
+  .get(csrfToken.genCsrfToken, auth.forgetPasswordGet)
+  .post(csrfToken.verifyCsrfToken, validator.forGetPasswordValidator, auth.forgetPasswordPost)
 module.exports = router

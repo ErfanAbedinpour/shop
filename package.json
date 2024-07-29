@@ -5,7 +5,7 @@
   "scripts": {
     "test:unit": "jest --testPathPattern=unit-test",
     "test": "jest --testPathPattern=e2e-test",
-    "insert":"jest e2e-test/inserData.spec.js",
+    "insert": "jest e2e-test/inserData.spec.js",
     "run": "nodemon app.js"
   },
   "keywords": [],
@@ -28,6 +28,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.10.2",
+    "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
     "sequelize": "^6.37.3",
     "sharp": "^0.33.4",
