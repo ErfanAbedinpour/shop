@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "test:unit": "jest --testPathPattern=unit-test",
-    "test": "jest --testPathPattern=e2e-test",
+    "test": "jest e2e-test/full-test.spec.js",
     "insert": "jest e2e-test/inserData.spec.js",
     "run": "nodemon app.js"
   },
