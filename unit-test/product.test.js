@@ -6,7 +6,7 @@ const fs = require('fs').promises;
 
 
 
-const product = { title: "titile", stockQuantity: 1, description: "description", price: 122222 }
+const product = { title: "titile", stockQuantity: 1, shortDescribe: "short", longDescribe: "long", price: 122222 }
 const mockReq = {
     flash: jest.fn(),
     body: product,
@@ -85,7 +85,8 @@ describe('product login test', function() {
         await productController.createProduct(mockReq, mockRes, next)
         expect(tables.Product.create).toHaveBeenCalledWith({
             title: product.title,
-            describe: product.description,
+            shortDescribe: product.shortDescribe,
+            longDescribe: product.longDescribe,
             price: product.price,
             stockQuantity: product.stockQuantity,
             CategoryId: mockReq.category
