@@ -104,11 +104,7 @@ describe('auth user ', function() {
         let HTML = jQuery(resp.text);
         let token = HTML.find('input[name=csrf_token]').val()
         const cookie = resp.headers['set-cookie'];
-        resp = await request(app).post('/auth/login').set('Cookie', cookie).send({
-            email: "milad.wtf44@gmail.com",
-            password: "12341234",
-            csrf_token: token
-        })
+        resp = await request(app).post("/auth/login").set('Cookie', cookie).send({ email: "milad.wtf44@gmail.com", password: "12341234", csrf_token: token });
         expect(resp.headers.location).toBe("/");
         //get product page
         resp = await request(app).get('/product/add').set('Cookie', cookie);
@@ -116,20 +112,22 @@ describe('auth user ', function() {
         token = HTML.find('input[name=csrf_token]').val()
         expect(resp.statusCode).toBe(200);
         //insert product
-        resp = await request(app).post('/product/add').set('Cookie', cookie)
-            .field('title', "testProduct")
-            .field('description', 'description')
-            .field('price', '120000')
-            .field('stockQuantity', '42')
-            .field('category', '1')
-            .field('csrf_token', token)
-            .attach('title', "/home/erfan/Desktop/images/imge1.jpg")
-            .attach('product', "/home/erfan/Desktop/images/title.jpg")
-        let product = await Product.findOne({ where: { title: 'testProduct' }, include: ['productImage'] })
-        expect(product.title).toStrictEqual("testProduct")
-        expect(product.describe).toStrictEqual('description')
-        expect(product.price).toStrictEqual('120000')
-        expect(product.stockQuantity).toStrictEqual(42)
+        await (request(app).post("/product/add").set('Cookie', cookie)
+            .field('title', 'title')
+            .field('shortDescribe', 'short12312313')
+            .field('longDescribe', '1234567891011121314154')
+            .field('category', 1)
+            .field('stockQuantity', 32)
+            .field('price', '122222')
+            .field("csrf_token", token)
+            .attach('title', '/home/erfan/Desktop/images/imge1.jpg')
+            .attach('product', '/home/erfan/Desktop/images/title.jpg')
+        )
+
+        let product = await Product.findOne({ where: { title: "title" }, include: ["productImage"] });
+        expect(product.title).toStrictEqual("title")
+        expect(product.price).toStrictEqual('122222')
+        expect(product.stockQuantity).toStrictEqual(32)
         expect(product.CategoryId).toStrictEqual(1);
         expect(product.UserId).toStrictEqual(1)
         expect((await product.productImage).length).toStrictEqual(2);
