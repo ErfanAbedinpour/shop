@@ -3,7 +3,7 @@
 ## sessionBase authentication and authorization
 
 ### TODO
-
+- [ ] add start and brandName for product and fix in test files and show model in index files
 - [x] register and singin user and render template
 - [x] access to admin to create user and product
 - [x] design all entity and relation
@@ -21,7 +21,8 @@
 - [x] write init Data for insert product in DB
 - [x] show product details
 - [x] forget and reset password
-- [ ] show product in index page
+- [x] show product in index page
+- [ ] write another models and after complete index page and select
 - [ ] user edit profile
 - [ ] show all profile informaion to admin page
 - [ ] edit user profile
