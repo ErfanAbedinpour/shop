@@ -1,33 +1,33 @@
-const { db } = require('../utils/constant')
-const { DataTypes } = require('sequelize')
-const Cart = require('./Cart')
-const Product = require('./Product')
+const { db } = require("../utils/constant");
+const { DataTypes } = require("sequelize");
+const Cart = require("./Cart");
+const Product = require("./Product");
 
 const productId = db.define("ProductCart", {
   id: {
     type: DataTypes.BIGINT,
     allowNull: false,
     autoIncrement: true,
-    primaryKey: true
+    primaryKey: true,
   },
   ProductId: {
     type: DataTypes.BIGINT,
     references: {
       model: Product,
-      key: "id"
-    }
+      key: "id",
+    },
   },
   CartId: {
     type: DataTypes.BIGINT,
     references: {
       model: Cart,
-      key: 'id'
-    }
+      key: "id",
+    },
   },
   quantity: {
     type: DataTypes.INTEGER,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
-module.exports = productId
+module.exports = productId;

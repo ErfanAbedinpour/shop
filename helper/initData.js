@@ -1,18 +1,18 @@
-const tables = require('../models/tables');
-const table = require('../models/tables');
+const tables = require("../models/tables");
+const table = require("../models/tables");
 
 async function fetchData() {
-  if (await tables.Category.count() >= 1) {
-    console.log('nullam')
+  if ((await tables.Category.count()) >= 1) {
+    console.log("nullam");
     return null;
   }
   const [man, women] = await table.Type.bulkCreate([
     {
-      gender: "man"
+      gender: "man",
     },
     {
-      gender: "women"
-    }
+      gender: "women",
+    },
   ]);
   const manCategory = await table.Category.bulkCreate([
     {
@@ -21,9 +21,9 @@ async function fetchData() {
     },
     {
       name: "ساعت مردانه",
-      slug: 'man-watch',
+      slug: "man-watch",
     },
-  ])
+  ]);
   const womenCategory = await table.Category.bulkCreate([
     {
       name: "ساعت زنانه",
@@ -33,17 +33,17 @@ async function fetchData() {
       name: "لباس زنانه",
       slug: "women-clothes",
     },
-  ])
-  man.addCategories(manCategory)
-  women.addCategories(womenCategory)
+  ]);
+  man.addCategories(manCategory);
+  women.addCategories(womenCategory);
 
   await tables.User.create({
     username: "erfan",
     email: "milad.wtf44@gmail.com",
     password: "12341234",
-    role: 'admin'
-  })
-  console.log('all data fetched succesfuuly')
+    role: "admin",
+  });
+  console.log("all data fetched succesfuuly");
 }
 
-module.exports = fetchData
+module.exports = fetchData;

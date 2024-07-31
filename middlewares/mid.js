@@ -1,57 +1,56 @@
-const tables = require('../models/tables');
+const tables = require("../models/tables");
 const isNotAuth = (req, res, next) => {
   try {
     if (req.session?.userId) {
-      return res.redirect('/');
+      return res.redirect("/");
     }
-    next()
+    next();
   } catch (error) {
     error.status = 500;
-    next(error)
+    next(error);
   }
-}
+};
 
 const isAuth = (req, res, next) => {
   if (!req.session?.userId) {
-    return res.redirect('/auth/login');
+    return res.redirect("/auth/login");
   }
-  next()
-}
+  next();
+};
 
 const auth = (req, res, next) => {
   try {
     const userId = req.session?.userId;
     if (userId) {
-      tables.User.findOne({ where: { id: +userId } })
-        .then(user => {
-          if (!user) {
-            req.session.destroy();
-            req.flash([
-              {
-                color: 'red',
-                msg: "لطفا لاگین کنید"
-              }
-            ])
-            return res.redirect('/auth/login')
-          }
-          req.user = user;
-          next();
-        })
+      tables.User.findOne({ where: { id: +userId } }).then((user) => {
+        if (!user) {
+          req.session.destroy();
+          req.flash([
+            {
+              color: "red",
+              msg: "لطفا لاگین کنید",
+            },
+          ]);
+          return res.redirect("/auth/login");
+        }
+        req.user = user;
+        next();
+      });
     }
   } catch (error) {
     error.status = 500;
-    next(error)
+    next(error);
   }
-}
+};
 
 const isAdmin = (req, res, next) => {
-  if (req.user.role === 'admin') return next()
-  const err = new Error("this router only avalibale for admin")
+  if (req.user.role === "admin") return next();
+  const err = new Error("this router only avalibale for admin");
   next(err);
-}
+};
 module.exports = {
   isNotAuth,
   isAuth,
   auth,
-  isAdmin
-}
+  isAdmin,
+};

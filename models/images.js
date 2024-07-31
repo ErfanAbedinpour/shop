@@ -1,23 +1,22 @@
-const { DataTypes } = require('sequelize')
-const { db } = require('../utils/constant')
+const { DataTypes } = require("sequelize");
+const { db } = require("../utils/constant");
 
-const image = db.define('image', {
+const image = db.define("image", {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
     allowNull: false,
-    autoIncrement: true
+    autoIncrement: true,
   },
   filename: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   type: {
     type: DataTypes.ENUM,
-    values: ['title', 'product'],
+    values: ["title", "product"],
     allowNull: false,
-  }
-})
+  },
+});
 
-
-module.exports = image
+module.exports = image;

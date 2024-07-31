@@ -1,92 +1,89 @@
-const { body } = require('express-validator')
-const { User } = require('../models/tables')
-const bcrypt = require('bcryptjs')
+const { body } = require("express-validator");
+const { User } = require("../models/tables");
+const bcrypt = require("bcryptjs");
 
 exports.singUpValidator = [
-  body('username')
+  body("username")
     .notEmpty()
-    .withMessage('نام کاربری اجباری است')
+    .withMessage("نام کاربری اجباری است")
     .bail()
     .isLength({ min: 4 })
-    .withMessage('نام کاربری باید حداقل ۴ کاراکتر داشته باشد')
+    .withMessage("نام کاربری باید حداقل ۴ کاراکتر داشته باشد")
     .bail(),
-  body('role')
+  body("role")
     .optional()
     .notEmpty()
-    .withMessage('role is empty')
+    .withMessage("role is empty")
     .bail()
-    .custom(role => {
-      if (!['user', 'admin'].includes(role)) {
-        throw new Error('role not valid');
+    .custom((role) => {
+      if (!["user", "admin"].includes(role)) {
+        throw new Error("role not valid");
       }
-      return true
+      return true;
     })
     .bail(),
-  body('email')
+  body("email")
     .notEmpty()
-    .withMessage('ایمیل اجباری است')
+    .withMessage("ایمیل اجباری است")
     .bail()
     .isEmail()
-    .withMessage('لطفا ایمیل معتبر وارد کنید')
+    .withMessage("لطفا ایمیل معتبر وارد کنید")
     .bail()
     .custom(async (email) => {
-      const user = await User.findOne({ where: { email } })
-      if (user) throw new Error("این ایمیل توسط شخص دیگر استفاده میشود")
-      return true
+      const user = await User.findOne({ where: { email } });
+      if (user) throw new Error("این ایمیل توسط شخص دیگر استفاده میشود");
+      return true;
     })
     .bail(),
-  body('password')
+  body("password")
     .notEmpty()
-    .withMessage('پسورد اجباری است')
+    .withMessage("پسورد اجباری است")
     .bail()
     .isLength({ min: 6 })
-    .withMessage('پسورد باید حداقل ۶ کاراکتر داشته باشد')
+    .withMessage("پسورد باید حداقل ۶ کاراکتر داشته باشد")
     .bail()
     .custom((pass, { req }) => {
       if (req.body.confirmPassword !== pass) {
-        throw new Error('پسورد ها همخونی ندارند')
+        throw new Error("پسورد ها همخونی ندارند");
       }
-      return true
-    })
-  ,
-]
+      return true;
+    }),
+];
 
 exports.loginValidator = [
-  body('password')
+  body("password").notEmpty().withMessage("لطفا پسورد را وارد کنید").bail(),
+  body("email")
     .notEmpty()
-    .withMessage('لطفا پسورد را وارد کنید')
-    .bail(),
-  body('email')
-    .notEmpty()
-    .withMessage('لطفا ایمیل را وارد کنید')
+    .withMessage("لطفا ایمیل را وارد کنید")
     .bail()
     .isEmail()
-    .withMessage('لطفا ایمیل معتبر وارد کنید')
+    .withMessage("لطفا ایمیل معتبر وارد کنید")
     .bail()
     .custom(async (email, { req }) => {
-      let user = await User.findOne({ where: { email } })
-      if (!user || !await bcrypt.compare(req.body.password, user.password)) throw new Error("ایمیل یا پسورد اشباه است")
-      if (user.isBan && user.role !== 'admin') throw new Error('شما توسط ادمین بن شده اید لطفا با پشتیبانی پیام بدید')
+      let user = await User.findOne({ where: { email } });
+      if (!user || !(await bcrypt.compare(req.body.password, user.password)))
+        throw new Error("ایمیل یا پسورد اشباه است");
+      if (user.isBan && user.role !== "admin")
+        throw new Error("شما توسط ادمین بن شده اید لطفا با پشتیبانی پیام بدید");
       delete user.password;
       req.userId = user.id;
       req.user = user;
-      return true
-    })
-]
-
+      return true;
+    }),
+];
 
 exports.forGetPasswordValidator = [
   body("password")
     .notEmpty()
-    .withMessage('لطفا پسورد را وارد کنید')
+    .withMessage("لطفا پسورد را وارد کنید")
     .bail()
     .isLength({ min: 6 })
-    .withMessage('پسورد باید حداقل ۶ کاکتر باشد')
+    .withMessage("پسورد باید حداقل ۶ کاکتر باشد")
     .bail()
     .custom((pass, { req }) => {
       if (pass !== req.body.confirmPassword) {
-        throw new Error('پسورد ها همخونی ندارند')
+        throw new Error("پسورد ها همخونی ندارند");
       }
-      return true
+      return true;
     }),
-]
+];

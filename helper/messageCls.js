@@ -1,26 +1,24 @@
 //get error messages and show to template
-function errorMessage(array, color = 'red') {
+function errorMessage(array, color = "red") {
   if (array.length === 0) return null;
-  const errorList = []
+  const errorList = [];
   for (const errObj of array) {
-    errorList.push({ msg: errObj.msg, color })
+    errorList.push({ msg: errObj.msg, color });
   }
-  return errorList
+  return errorList;
 }
-
 
 //get message and show to template
 function messageRawList(array) {
   if (array.length === 0) return null;
-  const msgList = []
+  const msgList = [];
   for (const msgObj of array) {
-    msgList.push({ msg: msgObj.msg, color: msgObj.color })
+    msgList.push({ msg: msgObj.msg, color: msgObj.color });
   }
-  return msgList
+  return msgList;
 }
-
 
 module.exports = {
   errorMessage,
-  messageRawList
-}
+  messageRawList,
+};

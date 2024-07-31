@@ -1,63 +1,56 @@
-const { body, validationResult } = require('express-validator')
-const tables = require('../models/tables')
-
+const { body, validationResult } = require("express-validator");
+const tables = require("../models/tables");
 
 exports.createProductValidator = [
-  body('title')
+  body("title")
     .notEmpty()
-    .withMessage('تایتل فیلد اجباری است')
+    .withMessage("تایتل فیلد اجباری است")
     .bail()
     .isLength({ min: 4 })
-    .withMessage('حداقل باید ۶ کارکتر باشد تایتل')
-    .bail()
-  ,
-  body('shortDescribe')
+    .withMessage("حداقل باید ۶ کارکتر باشد تایتل")
+    .bail(),
+  body("shortDescribe")
     .notEmpty()
-    .withMessage('لطفا توضیحات محصول را بنویسید')
+    .withMessage("لطفا توضیحات محصول را بنویسید")
     .bail()
-    .customSanitizer(des => des.trim())
+    .customSanitizer((des) => des.trim())
 
     .isLength({ min: 3 })
-    .withMessage('توضیحات حداقل باید 3 کارکتر باشد')
-  ,
-  body('longDescribe')
+    .withMessage("توضیحات حداقل باید 3 کارکتر باشد"),
+  body("longDescribe")
     .notEmpty()
-    .withMessage('لطفا توضیحات محصول را بنویسید')
+    .withMessage("لطفا توضیحات محصول را بنویسید")
     .bail()
-    .customSanitizer(des => des.trim())
+    .customSanitizer((des) => des.trim())
     .isLength({ min: 15 })
-    .withMessage('توضیحات حداقل باید 15 کارکتر باشد'),
-  body('stockQuantity')
+    .withMessage("توضیحات حداقل باید 15 کارکتر باشد"),
+  body("stockQuantity")
     .notEmpty()
-    .withMessage('لطفا موجودی کالا را وارد کنید')
-    .bail()
-  ,
-  body('price')
+    .withMessage("لطفا موجودی کالا را وارد کنید")
+    .bail(),
+  body("price")
     .notEmpty()
-    .withMessage('لطفا قیمت را وارد کنید')
+    .withMessage("لطفا قیمت را وارد کنید")
     .bail()
-    .customSanitizer(p => parseFloat(p))
+    .customSanitizer((p) => parseFloat(p))
     .isFloat()
-    .withMessage('لطفا مبلغ معتبر وارد کنید')
-    .bail()
-  ,
-  body('category')
-    .custom(value => {
+    .withMessage("لطفا مبلغ معتبر وارد کنید")
+    .bail(),
+  body("category")
+    .custom((value) => {
       if (!value) {
-        throw new Error('لطفا دسته بندی را وارد کنید')
+        throw new Error("لطفا دسته بندی را وارد کنید");
       }
-      return true
+      return true;
     })
     .bail()
-    .customSanitizer(id => +id)
+    .customSanitizer((id) => +id)
     .custom(async (cate, { req }) => {
-      const category = await tables.Category.findOne({ where: { id: cate } })
+      const category = await tables.Category.findOne({ where: { id: cate } });
       if (!category) {
-        throw new Error('لطفا دسته بندی معتبر وارد کنید')
+        throw new Error("لطفا دسته بندی معتبر وارد کنید");
       }
       req.category = category.id;
-      return true
-    })
-
-  ,
-]
+      return true;
+    }),
+];

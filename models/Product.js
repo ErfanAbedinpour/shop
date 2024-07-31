@@ -1,12 +1,12 @@
-const { db } = require('../utils/constant')
-const { DataTypes } = require('sequelize')
+const { db } = require("../utils/constant");
+const { DataTypes } = require("sequelize");
 
-const Product = db.define('Product', {
+const Product = db.define("Product", {
   id: {
     type: DataTypes.BIGINT,
     primaryKey: true,
     allowNull: false,
-    autoIncrement: true
+    autoIncrement: true,
   },
   title: {
     type: DataTypes.STRING,
@@ -18,17 +18,16 @@ const Product = db.define('Product', {
   },
   longDescribe: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   stockQuantity: {
     type: DataTypes.INTEGER,
-    defaultValue: 1
+    defaultValue: 1,
   },
   price: {
     type: DataTypes.DECIMAL,
-    allowNull: false
-  }
-})
+    allowNull: false,
+  },
+});
 
-
-module.exports = Product
+module.exports = Product;

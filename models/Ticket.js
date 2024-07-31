@@ -1,14 +1,12 @@
-const { db } = require('../utils/constant')
-const { DataTypes } = require('sequelize')
-
-
+const { db } = require("../utils/constant");
+const { DataTypes } = require("sequelize");
 
 const Ticket = db.define("Ticket", {
   id: {
     type: DataTypes.BIGINT,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   title: {
     type: DataTypes.STRING,
@@ -16,15 +14,15 @@ const Ticket = db.define("Ticket", {
   },
   body: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   email: {
-    type: DataTypes.STRING
-  }
-})
+    type: DataTypes.STRING,
+  },
+});
 
 module.exports = Ticket;
