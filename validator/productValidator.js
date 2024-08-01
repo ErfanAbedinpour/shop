@@ -36,6 +36,10 @@ exports.createProductValidator = [
     .isFloat()
     .withMessage("لطفا مبلغ معتبر وارد کنید")
     .bail(),
+  body('brand')
+  .notEmpty()
+  .withMessage('اطفا نام برند رو انتخاب کنید')
+  .bail(),
   body("category")
     .custom((value) => {
       if (!value) {

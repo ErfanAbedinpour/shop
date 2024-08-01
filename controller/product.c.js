@@ -27,10 +27,10 @@ exports.getCreate = async (req, res, next) => {
 
 exports.createProduct = async (req, res, next) => {
   try {
-    const { title, shortDescribe, longDescribe, price, stockQuantity } =
-      req.body;
+    const { title, shortDescribe, longDescribe, price, stockQuantity,brand} = req.body;
     const product = await tables.Product.create({
       title,
+      brand,
       shortDescribe: shortDescribe,
       longDescribe: longDescribe,
       price,

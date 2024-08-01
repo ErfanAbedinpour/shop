@@ -128,6 +128,7 @@ describe("auth user ", function () {
       .field("title", "title")
       .field("shortDescribe", "short12312313")
       .field("longDescribe", "1234567891011121314154")
+      .field('brand','allien')
       .field("category", 1)
       .field("stockQuantity", 32)
       .field("price", "122222")
@@ -144,6 +145,7 @@ describe("auth user ", function () {
     expect(product.stockQuantity).toStrictEqual(32);
     expect(product.CategoryId).toStrictEqual(1);
     expect(product.UserId).toStrictEqual(1);
+    expect(product.brand).toEqual('allien');
     expect((await product.productImage).length).toStrictEqual(2);
     //delete product
     resp = await request(app)

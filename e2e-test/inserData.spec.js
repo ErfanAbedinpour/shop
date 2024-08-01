@@ -29,6 +29,7 @@ describe("login and insert data and items", function () {
   };
   const products = [
     {
+      brand:"HugoBoss",
       title: "تیشرت مردانه",
       price: 299000,
       category: 1,
@@ -41,6 +42,7 @@ describe("login and insert data and items", function () {
       quantity: 50,
     },
     {
+      brand:"allien",
       title: "پیراهن زنانه",
       price: 499000,
       category: 2,
@@ -52,7 +54,9 @@ describe("login and insert data and items", function () {
       titleImage: "/home/erfan/Desktop/images/imge1.jpg",
       quantity: 30,
     },
+
     {
+      brand:"eton",
       title: "شلوار جین",
       price: 399000,
       category: 3,
@@ -102,6 +106,7 @@ async function inserProduct(request, app, cookie, item) {
   await request(app)
     .post("/product/add")
     .set("Cookie", cookie)
+    .field('brand',item.brand)
     .field("title", item.title)
     .field("shortDescribe", item.shortDescribe)
     .field("longDescribe", item.longDescribe)

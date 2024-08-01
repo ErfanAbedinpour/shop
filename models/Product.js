@@ -28,6 +28,14 @@ const Product = db.define("Product", {
     type: DataTypes.DECIMAL,
     allowNull: false,
   },
+  brand:{
+    type:DataTypes.STRING,
+    alloNull:false,
+  },
+  star:{
+    type:DataTypes.INTEGER,
+    defaultValue:1
+  }
 });
 
 module.exports = Product;
