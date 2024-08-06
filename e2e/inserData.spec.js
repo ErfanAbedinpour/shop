@@ -1,4 +1,4 @@
-process.env.NODE_ENV = "dev";
+process.env.NODEENV = "dev";
 const createApp = require("../createApp");
 const jsdom = require("jsdom");
 const jQuery = require("jquery")(new jsdom.JSDOM().window);
@@ -39,7 +39,7 @@ describe("login and insert data and items", function () {
       image: "/home/erfan/Desktop/images/imge1.jpg",
       image2: "/home/erfan/Desktop/images/image3.jpg",
       titleImage: "/home/erfan/Desktop/images/title.jpg",
-      quantity: 50,
+      quantity: 0,
     },
     {
       brand:"allien",

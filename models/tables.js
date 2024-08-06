@@ -76,4 +76,5 @@ module.exports = {
   Attribute: attr,
   Image: image,
   resetPassword,
+  Cart
 };

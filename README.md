@@ -3,38 +3,48 @@
 ## sessionBase authentication and authorization
 
 ### TODO
-- [x] add start and brandName for product and fix in test files and show model in index files
-- [x] register and singin user and render template
-- [x] access to admin to create user and product
-- [x] design all entity and relation
-- [x] save session to redis
-- [x] add product by admin
-- [x] product page create
-- [x] ban user from admin
-- [x] better template structure like auth form and fix index page bug
-- [x] create all models and relations
-- [x] compress product images and save to file
-- [x] validation product information and image info before create
-- [x] delete product from admin
-- [x] write unit test by jest
-- [x] write e2e test
-- [x] write init Data for insert product in DB
-- [x] show product details
-- [x] forget and reset password
-- [x] show product in index page
-- [ ] write another models and after complete index page and select
-- [ ] user edit profile
-- [ ] show all profile informaion to admin page
-- [ ] edit user profile
-- [ ] show all user to admin
-- [ ] reset password
-- [ ] admin page for show dashboard
-- [ ] add 1000 products
-- [ ] render product page
-- [ ] edit userprofile
-- [ ] forget pass
-- [ ] add remove product to cart
-- [ ] add and remove and show blog
+
+-   [x] add start and brandName for product and fix in test files and show model in index files
+-   [x] register and singin user and render template
+-   [x] access to admin to create user and product
+-   [x] design all entity and relation
+-   [x] save session to redis
+-   [x] add product by admin
+-   [x] product page create
+-   [x] ban user from admin
+-   [x] better template structure like auth form and fix index page bug
+-   [x] create all models and relations
+-   [x] compress product images and save to file
+-   [x] validation product information and image info before create
+-   [x] delete product from admin
+-   [x] write unit test by jest
+-   [x] write e2e test
+-   [x] write init Data for insert product in DB
+-   [x] show product details
+-   [x] forget and reset password
+-   [x] show product in index page
+-   [x] add product in cart and calc quantity of item and show in header
+-   [x] delete product from cart
+-   [] show cart view and shoe product and quantity on there
+-   [ ] Cart entity
+-   [ ] Comment entity
+-   [ ] attributes entity
+-   [ ] Factor entity for payment cart
+-   [ ] write order entity
+-   [ ] write ticket entity
+-   [ ] user edit profile
+-   [ ] show all profile informaion to admin page
+-   [ ] edit user profile
+-   [ ] show all user to admin
+-   [ ] reset password
+-   [ ] admin page for show dashboard
+-   [ ] add 1000 products
+-   [ ] render product page
+-   [ ] edit userprofile
+-   [ ] forget pass
+-   [ ] add remove product to cart
+-   [ ] add and remove and show blog
+-   [] search for better query
 
 ## installation
 

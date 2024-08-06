@@ -54,69 +54,85 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="product-details">
-                                        <div class="product-info">
-                                            <div class="product-inner">
-                                                <span class="category">
-                                                    <%= product.Category.name%>
-                                                </span>
-                                                <h3 class="title">
-                                                    <%= product.title%>
-                                                </h3>
-                                                <div class="rating-wrap">
-                                                    <ul class="rating">
-                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                        <li><i class="fa-sharp fa-solid fa-star"></i></li>
-                                                    </ul>
-                                                    <span>(1 نظر مشتریان)</span>
-                                                </div>
-                                                <!-- <span>360 تومان</span> //for decount of product -->
-                                                <h4 class="price">
-                                                    <%= product.price%> تومان
-                                                </h4>
-                                                <div class="product-desc-wrap">
-                                                    <p class="desc">
-                                                        <%= product.shortDescribe%>
-                                                    </p>
-                                                    <span class="view-text"><i class="fa-sharp fa-regular fa-eye"></i>28
-                                                        نفر
-                                                        در
-                                                        حال مشاهده این هستند</span>
-                                                </div>
-                                                <div class="item-left-line">
-                                                    <span>
-                                                        <%= product.stockQuantity%>
-                                                            در انبار باقی مانده
+                                            <div class="product-info">
+                                                <div class="product-inner">
+                                                    <span class="category">
+                                                        <%= product.Category.name%>
                                                     </span>
-                                                    <div class="line"></div>
+                                                    <span style="text-align: center;">
+                                                    <%- include('../partials/_messages.ejs')%>
+                                                    </span>
+                                                    <h3 class="title">
+                                                        <%= product.title%>
+                                                    </h3>
+                                                    <div class="rating-wrap">
+                                                        <ul class="rating">
+                                                            <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                            <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                            <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                            <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                            <li><i class="fa-sharp fa-solid fa-star"></i></li>
+                                                        </ul>
+                                                        <span>(1 نظر مشتریان)</span>
+                                                    </div>
+                                                    <!-- <span>360 تومان</span> //for decount of product -->
+                                                    <h4 class="price">
+                                                        <%= product.price%> تومان
+                                                    </h4>
+                                                    <div class="product-desc-wrap">
+                                                        <p class="desc">
+                                                            <%= product.shortDescribe%>
+                                                        </p>
+                                                        <span class="view-text"><i
+                                                                class="fa-sharp fa-regular fa-eye"></i>28
+                                                            نفر
+                                                            در
+                                                            حال مشاهده این هستند</span>
+                                                    </div>
+                                                    <div class="item-left-line">
+                                                        <span>
+                                                            <%= product.stockQuantity%>
+                                                                در انبار باقی مانده
+                                                        </span>
+                                                        <div class="line"></div>
+                                                    </div>
+                                                    <ul class="details-list">
+                                                        <li><i class="fa-light fa-arrow-right-arrow-left"></i>گارانتی
+                                                            بازگشت
+                                                        </li>
+                                                        <li><i class="fa-light fa-truck"></i>ارسال رایگان محصول </li>
+                                                        <li><i class="fa-light fa-circle-check"></i>کلیه مالیات ها و
+                                                            عوارض
+                                                            گمرکی
+                                                            شامل می شود</li>
+                                                    </ul>
                                                 </div>
-                                                <ul class="details-list">
-                                                    <li><i class="fa-light fa-arrow-right-arrow-left"></i>گارانتی بازگشت
-                                                    </li>
-                                                    <li><i class="fa-light fa-truck"></i>ارسال رایگان محصول </li>
-                                                    <li><i class="fa-light fa-circle-check"></i>کلیه مالیات ها و عوارض
-                                                        گمرکی
-                                                        شامل می شود</li>
+                                                <%if(isProductInUserCart){%>
+                                                    <form action="/cart/delete" method="post">
+                                                        <div class="product-btn">
+                                                            <input type="hidden" name="productId" value="<%=product.id%> ">
+                                                            <div class="cart-btn-wrap-2"><button type="submit"
+                                                                    class="rr-primary-btn cart-btn">برداشتن از سبد خرید</button></div>
+                                                        </div>
+                                                    </form>
+                                                <% }else{%> 
+                                                    <form action="/cart/add" method="post">
+                                                        <div class="product-btn">
+                                                            <input type="number" name="quantity" id="age" min="1"
+                                                                max="<%=product.stockQuantity %>" step="1" value="1">
+                                                            <input type="hidden" name="productId" value="<%=product.id%> ">
+                                                            <div class="cart-btn-wrap-2"><button type="submit"
+                                                                    class="rr-primary-btn cart-btn">افزودن به سبد
+                                                                    خرید</button></div>
+                                                        </div>
+                                                    </form>
+                                                <% } %> 
+                                                <ul class="product-meta">
+                                                    <li><a href="#">مقایسه کنید</a></li>
+                                                    <li><a href="#">سوال بپرس</a></li>
+                                                    <li><a href="#">اشتراک گذاری</a></li>
                                                 </ul>
                                             </div>
-                                            <div class="product-btn">
-                                                <form>
-                                                    <input type="number" name="age" id="age" min="1" max="100" step="1"
-                                                        value="1">
-                                                </form>
-                                                <div class="cart-btn-wrap-2"><a href="#"
-                                                        class="rr-primary-btn cart-btn">افزودن
-                                                        به سبد خرید</a></div>
-                                            </div>
-                                            <a href="#" class="shop-details-btn rr-primary-btn">اکنون مورد را بخرید</a>
-                                            <ul class="product-meta">
-                                                <li><a href="#">مقایسه کنید</a></li>
-                                                <li><a href="#">سوال بپرس</a></li>
-                                                <li><a href="#">اشتراک گذاری</a></li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -322,6 +338,7 @@
 
                         <!-- JS here -->
                         <%- include('../partials/_foot.ejs')%>
+
     </body>
 
 </html>
