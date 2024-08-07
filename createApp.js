@@ -4,6 +4,7 @@ const path = require("path");
 const middlewares = require("./config/midConfig");
 const tables = require("./models/tables");
 const createError = require("http-errors");
+const { calcUserCartCount, getCategories } = require("./utils/functions");
 require("dotenv").config({ path: "./.env" });
 
 function createApp(db) {
@@ -16,37 +17,19 @@ function createApp(db) {
     app.use(middlewares(db));
 
     app.use((req, _, next) => {
-        tables.Category.findAll({ attributes: ["name", "slug"] }).then(
-            async (category) => {
-                const isAuth = req.session.user || false;
-                let count = 0;
-                if (isAuth) {
-                    let userCart = await tables.Cart.findOne({
-                        where: { UserId: req.session?.user?.id },
-                    });
-
-                    const usreProductInCarts = await tables.ProductCart.findAll(
-                        {
-                            where: { CartId: userCart?.id },
-                        },
-                    );
-                    for (const { quantity } of usreProductInCarts) {
-                        count += quantity;
-                    }
-                }
-                let localPaylaod = {
-                    isAuth,
-                    path: req.path,
-                    currentUser: req.session.user,
-                    category: category,
-                    cartItemNumber: count,
-                };
-                app.locals = localPaylaod;
-                next();
-            },
-        );
+        if (!req.session || !req.session.isAuth) {
+            req.session.isAuth = false;
+        }
+        let localPaylaod = {
+            isAuth: req.session.isAuth,
+            path: req.path,
+            currentUser: req.session?.user ?? null,
+        };
+        app.locals = localPaylaod;
+        next();
     });
-
+    app.use(getCategories);
+    app.use(calcUserCartCount);
     //home route
     const homeRouter = require("./router/home.r");
     app.use(homeRouter);

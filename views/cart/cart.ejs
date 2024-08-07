@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    
+    <%- include('../partials/_head.ejs')%>
+
+    <body>
+        <%- include('../partials/_header.ejs')%>
+
+        <%- include('../partials/_search.ejs')%>
+        <!-- /.mobile-side-menu -->
+        <div id="preloader">
+            <div class="preloader-close">X</div>
+            <div class="sk-three-bounce">
+                <div class="sk-child sk-bounce1"></div>
+                <div class="sk-child sk-bounce2"></div>
+                <div class="sk-child sk-bounce3"></div>
+            </div>
+        </div>
+        <!-- ./ preloader -->
+
+       <%- include('../partials/_preload.ejs')%> 
+        <!-- ./ page-header -->
+
+        <section class="cart-section pt-130 pb-130">
+            <div class="container rtl">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="table-content cart-table">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove"></th>
+                                        <th class="cart-product-name text-center">محصولات</th>
+                                        <th class="product-price"> قیمت</th>
+                                        <th class="product-quantity">کیفیت</th>
+                                        <th class="product-subtotal">جمع فرعی</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%products.forEach(p=>{%>
+                                        <tr id="items">
+                                            <td class="product-remove"><button><i class="fa-sharp fa-regular fa-xmark"></i></button></td>
+                                            <td class="product-thumbnail">
+                                                <a href="/product/<%= p.product.id%>">
+                                                    <img src="/productImages/<%= p.product.productImage[0].filename%>" alt="img">
+                                                </a>
+                                                <div class="product-thumbnail">
+                                                    <h4 class="title"><%= p.product.title%></h4>
+                                                </div>
+                                            </td>
+                                                <td class="product-price"><span class="amount" ><%= p.product.price%> هزار تومان</span></td>
+                                            <td class="product-quantity">
+                                                <div class="quantity__group">
+                                                    <input id="quantity" type="number" class="input-text qty text" name="quantity" value="<%= p.quantity%>" min="1" max="<%= p.product.stockQuantity%>" step="1" autocomplete="off">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal"><span class="amount" id="amountOverAll"> جم کل</span></td>
+                                        </tr>
+                                    <% }) %> 
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="cart-btn-wrap">
+                            <div class="left-item">
+                                <input type="text" class="form-control" placeholder="کد را وارد کنید">
+                                <button class="rr-primary-btn">تایید کد تخفیف</button>
+                            </div>
+                            <button class="rr-primary-btn update-btn" onclick="calcAmount()">به روزرسانی سبد خرید</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                    <div class="checkout-wrapper">
+                        <div class="checkout-top checkout-item item-1">
+                            <h4 class="title">کل سبد خرید</h4>
+                        </div>
+                        <div class="checkout-top checkout-item">
+                            <h4 class="title">جمع اصلی</h4>
+                            <span class="price">1100 هزار تومان</span>
+                        </div>
+                        <div class="checkout-shipping checkout-item">
+                            <h4 class="title">ارسال</h4>
+                            <div class="shipping-right">
+                                <div class="checkout-option-wrapper">
+                                    <div class="shipping-option">
+                                        <input id="flat_rate" type="radio" name="shipping">
+                                        <label for="flat_rate">ارسال رایگان</label>
+                                    </div>
+                                    <div class="shipping-option">
+                                        <input id="local_pickup" type="radio" name="shipping">
+                                        <label for="local_pickup">نرخ ثابت</label>
+                                    </div>
+                                    <div class="shipping-option">
+                                        <input id="free_shipping" type="radio" name="shipping">
+                                        <label for="free_shipping">وانت محلی</label>
+                                    </div>
+                                </div>
+                                <p>گزینه های حمل و نقل به روز می شود <br> در هنگام تسویه حساب</p>
+                                <span>محاسبه حمل و نقل</span>
+                            </div>
+                        </div>
+                        <div class="checkout-total checkout-item">
+                            <h4 class="title">جمع</h4>
+                            <span>724 هزا تومان</span>
+                        </div>
+                    </div>
+                    <div class="checkout-proceed">
+                        <a href="checkout.html" class="rr-primary-btn checkout-btn">به تسویه حساب بروید</a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ./ cart-section -->
+
+        <%- include('../partials/_footer.ejs')%>
+
+        <%- include('../partials/_foot.ejs')%>
+
+
+        <script>
+            function calcAmount(){
+                let amountAll = 0;
+                const countOfItem = document.querySelectorAll('#items').forEach(item=>{
+                    const price = Number(item.querySelector('.amount').textContent.split('هزار تومان')[0].trim());
+                    const count = Number(item.querySelector('#quantity').value);
+                    const priceOverAll = price* count;
+                    amountAll+=priceOverAll
+                    item.querySelector('#amountOverAll').textContent = priceOverAll
+                })
+                document.querySelector('.price').textContent =amountAll 
+                document.querySelector('.checkout-total').querySelector('span').textContent = amountAll
+            }
+            calcAmount();
+
+        </script>
+    </body>
+
+</html>
