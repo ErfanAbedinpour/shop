@@ -1,21 +1,18 @@
 const tables = require("../models/tables");
+const craeteError = require("http-errors");
+
 const isNotAuth = (req, res, next) => {
-    try {
-        if (req.session?.userId) {
-            return res.redirect("/");
-        }
-        next();
-    } catch (error) {
-        error.status = 500;
-        next(error);
+    if (req.session?.isAuth) {
+        return res.redirect("/");
     }
+    next();
 };
 
 const isAuth = (req, res, next) => {
-    if (!req.session?.user) {
-        return res.redirect("/auth/login");
+    if (req.session?.isAuth) {
+        return next();
     }
-    next();
+    return res.redirect("/auth/login");
 };
 
 const auth = (req, res, next) => {
@@ -45,8 +42,7 @@ const auth = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
     if (req.user.role === "admin") return next();
-    const err = new Error("this router only avalibale for admin");
-    next(err);
+    next(craeteError(404, "صفحه پیدا نشد"));
 };
 module.exports = {
     isNotAuth,
