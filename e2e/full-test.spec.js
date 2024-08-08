@@ -7,13 +7,12 @@ const { db } = require("../utils/constant");
 const { User, Product } = require("../models/tables");
 const fetchData = require("../helper/initData");
 
-let app;
+let app = createApp(db);
 
 async function beforeAllFunc() {
     await db.authenticate();
     await db.sync({ force: true });
     await fetchData();
-    app = createApp(db);
 }
 
 async function afterAllFunc() {
