@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const middlewares = require("./config/midConfig");
-const tables = require("./models/tables");
 const createError = require("http-errors");
 const { calcUserCartCount, getCategories } = require("./utils/functions");
 require("dotenv").config({ path: "./.env" });
