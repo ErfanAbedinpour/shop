@@ -4,10 +4,8 @@ const createError = require("http-errors");
 exports.calcUserCartCount = (req, res, next) => {
     let count = 0;
     if (!req.session.isAuth) {
-        if (!req.session?.cart) {
-            if (!req.session.cart || req.session.cart.length < 1)
-                req.session.cart = [];
-
+        if (!req.session.cart || req.session.cart.length < 1) {
+            req.session.cart = [];
             res.locals.cartItemNumber = count;
             return next();
         }
@@ -20,19 +18,21 @@ exports.calcUserCartCount = (req, res, next) => {
         try {
             tables.Cart.findOne({
                 where: { UserId: req.session.userId },
-            })
-                .then((userCart) => {
-                    return tables.ProductCart.findAll({
+            }).then((userCart) => {
+                if (userCart) {
+                    tables.ProductCart.findAll({
                         where: { CartId: userCart?.id },
+                    }).then((userProducts) => {
+                        if (userProducts) {
+                            for (const { quantity } of userProducts) {
+                                count += quantity;
+                            }
+                        }
                     });
-                })
-                .then((userProducts) => {
-                    for (const { quantity } of userProducts) {
-                        count += quantity;
-                    }
-                    res.locals.cartItemNumber = count;
-                    return next();
-                });
+                }
+                res.locals.cartItemNumber = count;
+                return next();
+            });
         } catch (error) {
             next(createError(500, error.message));
         }
